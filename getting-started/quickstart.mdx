@@ -1,258 +1,294 @@
 ---
 title: "Quickstart"
-description: "Execute your first cross-chain swap using NEAR Intents in under 5 minutes"
-icon: 'rocket'
+description: "Execute your first cross-chain swap using NEAR Intents"
+icon: "rocket"
 ---
 
+Execute a cross-chain token swap using the 1Click Swap API. You'll swap tokens from one blockchain to another without managing bridges or liquidity—NEAR Intents handles everything automatically.
 
-In this quickstart, you'll execute your first cross-chain token swap using NEAR Intents. You'll swap tokens from one blockchain to another without managing complex bridge interfaces or worrying about liquidity—NEAR Intents handles everything automatically.
+<Info>
+**Prerequisites**: A small amount of tokens on a [supported chain](/resources/chain-support). Start with a test amount ($10-50) for your first swap.
+</Info>
 
-**Time to complete**: 5 minutes  
-**Result**: Tokens successfully transferred across chains to your destination address
+## How It Works
 
-## How NEAR Intents works
-
-Instead of navigating multiple bridges and DEXs yourself, NEAR Intents lets you specify what you want (e.g., "swap 1 ETH on Ethereum for USDC on NEAR") and competitive market makers race to give you the best execution. You simply:
+Instead of navigating multiple bridges and DEXs, NEAR Intents lets you specify what you want (e.g., "swap 0.1 NEAR for ARB on Arbitrum") and competitive market makers race to give you the best execution:
 
 1. Request a quote for your desired swap
 2. Send tokens to a unique deposit address
 3. Receive your swapped tokens on the destination chain
 
-Market makers compete for your business, ensuring optimal rates while the NEAR Intents protocol guarantees secure, atomic execution. If anything goes wrong, your funds are automatically refunded.
+If anything goes wrong, your funds are automatically refunded.
 
-<Info>
-**Prerequisites**: You'll need a small amount of tokens on a supported source chain. We recommend starting with a test amount (equivalent to $10-50) for your first swap.
-</Info>
+## Option 1: Use the SDK (Recommended)
 
-<Tip>
-**New to crypto swaps?** Think of NEAR Intents as a universal translator for blockchain assets—it converts your tokens from one blockchain's "language" to another's, automatically finding the best exchange rate.
-</Tip>
+The TypeScript SDK provides the simplest integration path.
 
-## Execute your first swap
+```bash
+npm install @defuse-protocol/one-click-sdk-typescript
+```
+
+```typescript
+import { oneClickSwap } from '@defuse-protocol/one-click-sdk-typescript';
+
+const result = await oneClickSwap({
+  originAsset: "nep141:wrap.near",
+  destinationAsset: "nep141:arb-0x912ce59144191c1204e64559fe8253a0e49e6548.omft.near",
+  amount: "100000000000000000000000", // 0.1 NEAR
+  recipient: "0xYourArbitrumAddress",
+  recipientType: "DESTINATION_CHAIN",
+  refundTo: "your-account.near",
+  refundType: "INTENTS"
+});
+```
+
+See the [example repository](https://github.com/near-examples/near-intents-examples) for a complete working implementation with step-by-step code.
+
+**Available SDKs:**
+- [TypeScript](https://github.com/defuse-protocol/one-click-sdk-typescript)
+- [Go](https://github.com/defuse-protocol/one-click-sdk-go)
+- [Rust](https://github.com/defuse-protocol/one-click-sdk-rs)
+
+## Option 2: Use the REST API
 
 <Steps>
 <Step title="Get supported tokens">
-  First, check which tokens and chains are currently supported by the 1Click API.
+Fetch available tokens to find the `assetId` values you'll need.
 
-  <CodeGroup>
-  ```bash cURL
-  curl https://1click.chaindefuser.com/v0/tokens
-  ```
+<CodeGroup>
+```bash cURL
+curl https://1click.chaindefuser.com/v0/tokens
+```
 
-  ```javascript JavaScript
-  const response = await fetch('https://1click.chaindefuser.com/v0/tokens');
-  const tokens = await response.json();
-  console.log(tokens);
-  ```
+```typescript TypeScript
+const response = await fetch('https://1click.chaindefuser.com/v0/tokens');
+const tokens = await response.json();
+```
 
-  ```python Python
-  import requests
-  response = requests.get('https://1click.chaindefuser.com/v0/tokens')
-  tokens = response.json()
-  print(tokens)
-  ```
-  </CodeGroup>
+```python Python
+import requests
+response = requests.get('https://1click.chaindefuser.com/v0/tokens')
+tokens = response.json()
+```
+</CodeGroup>
 
-  <Check>
-  You'll receive a list of supported tokens with their chain, address, and symbol information.
-  </Check>
+The response includes tokens with their `assetId` in this format:
+- NEAR tokens: `nep141:wrap.near`
+- Bridged tokens: `nep141:eth-0xdac17f958d2ee523a2206206994597c13d831ec7.omft.near`
 </Step>
 
 <Step title="Request a quote">
-  Request a quote for your intended swap. The API will return the best available rate and a unique deposit address.
+Request a quote with your swap parameters. Include your JWT token to avoid the 0.1% fee.
 
-  <CodeGroup>
-  ```bash cURL
-  curl -X POST https://1click.chaindefuser.com/v0/quote \
-    -H "Content-Type: application/json" \
-    -d '{
-      "dry": false,
-      "from_chain": "ethereum",
-      "from_token": "ETH",
-      "from_amount": "1000000000000000000",
-      "to_chain": "near",
-      "to_token": "USDC",
-      "destination_address": "your-near-account.near",
-      "refund_address": "0xYourEthereumAddress"
-    }'
-  ```
+<CodeGroup>
+```bash cURL
+curl -X POST https://1click.chaindefuser.com/v0/quote \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{
+    "dry": false,
+    "swapType": "EXACT_IN",
+    "originAsset": "nep141:wrap.near",
+    "destinationAsset": "nep141:arb-0x912ce59144191c1204e64559fe8253a0e49e6548.omft.near",
+    "amount": "100000000000000000000000",
+    "recipient": "0xYourArbitrumAddress",
+    "recipientType": "DESTINATION_CHAIN",
+    "refundTo": "your-account.near",
+    "refundType": "INTENTS"
+  }'
+```
 
-  ```javascript JavaScript
-  const quote = await fetch('https://1click.chaindefuser.com/v0/quote', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      dry: false,
-      from_chain: 'ethereum',
-      from_token: 'ETH',
-      from_amount: '1000000000000000000',
-      to_chain: 'near',
-      to_token: 'USDC',
-      destination_address: 'your-near-account.near',
-      refund_address: '0xYourEthereumAddress'
-    })
-  });
-  const result = await quote.json();
-  ```
+```typescript TypeScript
+const quote = await fetch('https://1click.chaindefuser.com/v0/quote', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer YOUR_JWT_TOKEN'
+  },
+  body: JSON.stringify({
+    dry: false,
+    swapType: 'EXACT_IN',
+    originAsset: 'nep141:wrap.near',
+    destinationAsset: 'nep141:arb-0x912ce59144191c1204e64559fe8253a0e49e6548.omft.near',
+    amount: '100000000000000000000000',
+    recipient: '0xYourArbitrumAddress',
+    recipientType: 'DESTINATION_CHAIN',
+    refundTo: 'your-account.near',
+    refundType: 'INTENTS'
+  })
+});
+const result = await quote.json();
+```
 
-  ```python Python
-  import requests
-  quote = requests.post('https://1click.chaindefuser.com/v0/quote', 
-    json={
-      'dry': False,
-      'from_chain': 'ethereum',
-      'from_token': 'ETH',
-      'from_amount': '1000000000000000000',
-      'to_chain': 'near',
-      'to_token': 'USDC',
-      'destination_address': 'your-near-account.near',
-      'refund_address': '0xYourEthereumAddress'
-    }
-  )
-  result = quote.json()
-  ```
-  </CodeGroup>
+```python Python
+import requests
 
-  <Tip>
-  Set `dry: true` when you're just checking prices without generating a transaction. Only set it to `false` when you're ready to execute.
-  </Tip>
+quote = requests.post(
+  'https://1click.chaindefuser.com/v0/quote',
+  headers={
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer YOUR_JWT_TOKEN'
+  },
+  json={
+    'dry': False,
+    'swapType': 'EXACT_IN',
+    'originAsset': 'nep141:wrap.near',
+    'destinationAsset': 'nep141:arb-0x912ce59144191c1204e64559fe8253a0e49e6548.omft.near',
+    'amount': '100000000000000000000000',
+    'recipient': '0xYourArbitrumAddress',
+    'recipientType': 'DESTINATION_CHAIN',
+    'refundTo': 'your-account.near',
+    'refundType': 'INTENTS'
+  }
+)
+result = quote.json()
+```
+</CodeGroup>
 
-  <Warning>
-  Quotes expire after a short time. Execute your swap promptly after receiving a quote.
-  </Warning>
+<Tip>
+Set `dry: true` to preview pricing without generating a deposit address. Set `dry: false` when ready to execute.
+</Tip>
+
+**Key parameters:**
+
+| Parameter | Description |
+|-----------|-------------|
+| `swapType` | `EXACT_IN` (specify input amount) or `EXACT_OUT` (specify output amount) |
+| `originAsset` | Source token `assetId` from the tokens endpoint |
+| `destinationAsset` | Target token `assetId` from the tokens endpoint |
+| `amount` | Amount in smallest unit (wei, yoctoNEAR, etc.) |
+| `recipient` | Address to receive swapped tokens |
+| `recipientType` | `DESTINATION_CHAIN` (native address) or `INTENTS` (NEAR account) |
+| `refundTo` | Address for refunds if swap fails |
+| `refundType` | `DESTINATION_CHAIN` or `INTENTS` |
 </Step>
 
-<Step title="Send tokens to deposit address">
-  Transfer your tokens to the unique deposit address provided in the quote response.
+<Step title="Send tokens">
+Transfer tokens to the `depositAddress` from the quote response. The swap begins automatically upon receipt.
 
-  The 1Click service will automatically detect your deposit and begin processing the swap.
-
-  <Info>
-  Save your transaction hash - you'll need it for the next optional step and for tracking your swap status.
-  </Info>
+Save the deposit address and your transaction hash for tracking.
 </Step>
 
-<Step title="Submit transaction hash (Optional)">
-  Speed up processing by notifying 1Click of your deposit transaction immediately.
+<Step title="Submit transaction hash (optional)">
+Speed up processing by notifying 1Click of your deposit.
 
-  <CodeGroup>
-  ```bash cURL
-  curl -X POST https://1click.chaindefuser.com/v0/deposit/submit \
-    -H "Content-Type: application/json" \
-    -d '{
-      "deposit_address": "address-from-quote-response",
-      "tx_hash": "0xYourTransactionHash"
-    }'
-  ```
+<CodeGroup>
+```bash cURL
+curl -X POST https://1click.chaindefuser.com/v0/deposit/submit \
+  -H "Content-Type: application/json" \
+  -d '{
+    "depositAddress": "address-from-quote-response",
+    "txHash": "0xYourTransactionHash"
+  }'
+```
 
-  ```javascript JavaScript
-  await fetch('https://1click.chaindefuser.com/v0/deposit/submit', {
-    method: 'POST',
-    headers: { 'Content-Type': application/json' },
-    body: JSON.stringify({
-      deposit_address: 'address-from-quote-response',
-      tx_hash: '0xYourTransactionHash'
-    })
-  });
-  ```
+```typescript TypeScript
+await fetch('https://1click.chaindefuser.com/v0/deposit/submit', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    depositAddress: 'address-from-quote-response',
+    txHash: '0xYourTransactionHash'
+  })
+});
+```
 
-  ```python Python
-  requests.post('https://1click.chaindefuser.com/v0/deposit/submit',
-    json={
-      'deposit_address': 'address-from-quote-response',
-      'tx_hash': '0xYourTransactionHash'
-    }
-  )
-  ```
-  </CodeGroup>
-
-  <Tip>
-  While optional, submitting your transaction hash can significantly reduce processing time.
-  </Tip>
+```python Python
+requests.post(
+  'https://1click.chaindefuser.com/v0/deposit/submit',
+  json={
+    'depositAddress': 'address-from-quote-response',
+    'txHash': '0xYourTransactionHash'
+  }
+)
+```
+</CodeGroup>
 </Step>
 
-<Step title="Monitor swap status">
-  Check the status of your swap at any time using the deposit address.
+<Step title="Monitor status">
+Check swap progress using the deposit address.
 
-  <CodeGroup>
-  ```bash cURL
-  curl "https://1click.chaindefuser.com/v0/status?deposit_address=your-deposit-address"
-  ```
+<CodeGroup>
+```bash cURL
+curl "https://1click.chaindefuser.com/v0/status?depositAddress=your-deposit-address"
+```
 
-  ```javascript JavaScript
-  const status = await fetch(
-    'https://1click.chaindefuser.com/v0/status?deposit_address=your-deposit-address'
-  );
-  const result = await status.json();
-  ```
+```typescript TypeScript
+const status = await fetch(
+  'https://1click.chaindefuser.com/v0/status?depositAddress=your-deposit-address'
+);
+const result = await status.json();
+```
 
-  ```python Python
-  status = requests.get(
-    'https://1click.chaindefuser.com/v0/status',
-    params={'deposit_address': 'your-deposit-address'}
-  )
-  ```
-  </CodeGroup>
+```python Python
+status = requests.get(
+  'https://1click.chaindefuser.com/v0/status',
+  params={'depositAddress': 'your-deposit-address'}
+)
+```
+</CodeGroup>
 
-  <Check>
-  When the status shows `SUCCESS`, your tokens have been delivered to your destination address!
-  </Check>
+**Swap statuses:**
+
+| Status | Description |
+|--------|-------------|
+| `PENDING_DEPOSIT` | Awaiting your token deposit |
+| `PROCESSING` | Deposit detected, swap being executed |
+| `SUCCESS` | Tokens delivered to destination address |
+| `INCOMPLETE_DEPOSIT` | Deposit below required amount |
+| `REFUNDED` | Swap failed, funds returned to refund address |
+| `FAILED` | Swap encountered an error |
 </Step>
 </Steps>
 
-## Understanding swap statuses
+## Authentication
 
-Your swap progresses through these states:
+Get a JWT token from the [Partner Dashboard](https://partners.near-intents.org/) to avoid the 0.1% (10 basis points) fee. Include it in your requests:
 
-- **PENDING_DEPOSIT** - Waiting for your token deposit
-- **PROCESSING** - Deposit detected, market makers are executing your swap
-- **SUCCESS** - Tokens delivered to your destination address
-- **INCOMPLETE_DEPOSIT** - Deposit received but below required amount
-- **REFUNDED** - Swap failed, funds returned to your refund address
-- **FAILED** - Swap encountered an error
+```
+Authorization: Bearer YOUR_JWT_TOKEN
+```
 
-<Warning>
-If your swap status is `INCOMPLETE_DEPOSIT` or `REFUNDED`, check your refund address for returned funds.
-</Warning>
+See the [Authentication guide](/api-reference/authentication) for details.
 
-## Next steps
+## Next Steps
 
 <CardGroup cols={2}>
-<Card title="1Click API Reference" icon="code" href="/getting-started/quickstart-1click">
-  Explore the complete 1Click Swap API documentation with detailed examples.
+<Card title="API Reference" icon="code" href="/api-reference/introduction">
+  Complete 1Click Swap API documentation
 </Card>
 
-<Card title="Integrate into your app" icon="puzzle-piece" href="/intent-creators/examples">
-  Learn how to integrate NEAR Intents into wallets and applications.
+<Card title="Example Repository" icon="github" href="https://github.com/near-examples/near-intents-examples">
+  Working TypeScript implementation
 </Card>
 
-<Card title="View supported chains" icon="link" href="/resources/chain-support">
-  See all supported blockchains and tokens.
+<Card title="Supported Chains" icon="link" href="/resources/chain-support">
+  All supported blockchains and tokens
 </Card>
 
-<Card title="Understand fees" icon="dollar-sign" href="/resources/fees">
-  Learn about platform fees and how to obtain free API access.
+<Card title="Fee Configuration" icon="wallet" href="/api-reference/fee-config">
+  Set up fee collection for your integration
 </Card>
 </CardGroup>
 
-## Get help
+## Troubleshooting
 
 <AccordionGroup>
-<Accordion title="My swap is taking a long time">
+<Accordion title="Swap taking a long time">
   - Check the blockchain explorer for your deposit transaction
   - Verify the deposit address matches the quote response
   - Allow up to 15 minutes for cross-chain processing
-  - Check the status endpoint for current swap state
+  - Use the status endpoint to check current state
 </Accordion>
 
 <Accordion title="Swap failed or was refunded">
   - Verify you sent the exact amount specified in the quote
   - Check your refund address for returned funds
   - Ensure your destination address format is correct for the target chain
-  - Try requesting a new quote and executing again
+  - Request a new quote and try again
 </Accordion>
 
-<Accordion title="Need more help?">
-  Join our [Telegram community @near_intents](https://t.me/near_intents) for support and assistance with your integration.
+<Accordion title="Need help?">
+  Join our [Telegram community](https://t.me/near_intents) for support.
 </Accordion>
 </AccordionGroup>

@@ -21,14 +21,17 @@ The list of supported chains is continuously expanding. Check this page regularl
   All EVM-compatible chains use the same address format and signing standards.
 
   **Supported Networks:**
-  - Arbitrum
-  - Aurora
-  - Base
-  - Bera
-  - BNB Chain
-  - Ethereum
-  - Gnosis
-  - Polygon
+
+  <CardGroup cols={4}>
+    <Card title="Arbitrum" icon={<img src="/images/chains/arbitrum.svg" />} />
+    <Card title="Aurora" icon={<img src="/images/chains/aurora.svg" />} />
+    <Card title="Base" icon={<img src="/images/chains/base.svg" />} />
+    <Card title="Bera" icon={<img src="/images/chains/bera.svg" />} />
+    <Card title="BNB Chain" icon={<img src="/images/chains/bnb.svg" />} />
+    <Card title="Ethereum" icon={<img src="/images/chains/ethereum.svg" />} />
+    <Card title="Gnosis" icon={<img src="/images/chains/gnosis.svg" />} />
+    <Card title="Polygon" icon={<img src="/images/chains/polygon.svg" />} />
+  </CardGroup>
 
   **Address Format:**
   - `0x`-prefixed hexadecimal (42 characters)
@@ -36,7 +39,7 @@ The list of supported chains is continuously expanding. Check this page regularl
 
   **Signing Standard:**
   - ERC-191 (all EVM wallets: MetaMask, Rabby, Rainbow, WalletConnect)
-  
+
   <Check>
   ✅ Fully supported with all EVM wallets
   </Check>
@@ -57,7 +60,7 @@ The list of supported chains is continuously expanding. Check this page regularl
 
   **Signing Standard:**
   - BIP-322 (Bitcoin Knots, Bitcoin Core, Sparrow)
-  
+
   <Check>
   ✅ All address types supported
   </Check>
@@ -94,7 +97,7 @@ The list of supported chains is continuously expanding. Check this page regularl
 
   **Signing Standard:**
   - NEP-413 (MyNearWallet, Meteor, Sender, Ledger)
-  
+
   <Check>
   ✅ Fully supported with native NEAR wallets
   </Check>
@@ -107,7 +110,7 @@ The list of supported chains is continuously expanding. Check this page regularl
 
   **Signing Standard:**
   - Raw Ed25519 (Phantom, Solflare, Slope)
-  
+
   <Check>
   ✅ Fully supported with all major Solana wallets
   </Check>
@@ -130,7 +133,7 @@ The list of supported chains is continuously expanding. Check this page regularl
 
   **Signing Standard:**
   - SEP-53 (Freighter, Lumens Wallet, SatoshiPay)
-  
+
   <Check>
   ✅ Fully supported
   </Check>
@@ -143,7 +146,7 @@ The list of supported chains is continuously expanding. Check this page regularl
 
   **Signing Standard:**
   - TON Connect 2.0 (Tonkeeper, EverWallet, HOT Wallet)
-  
+
   <Check>
   ✅ Fully supported with TON Connect wallets
   </Check>
@@ -156,7 +159,7 @@ The list of supported chains is continuously expanding. Check this page regularl
 
   **Signing Standard:**
   - TIP-191 (TronLink, Klever, Trust Wallet)
-  
+
   <Check>
   ✅ Fully supported
   </Check>
@@ -268,15 +271,15 @@ This returns real-time data on available tokens, their addresses, decimals, and 
   Execute your first cross-chain swap in under 5 minutes.
 </Card>
 
-<Card title="Integration guide" icon="code" href="/intent-creators/examples">
-  Add NEAR Intents to your wallet or application.
+<Card title="Integrate into your app" icon="puzzle-piece" href="/intent-creators/examples">
+  Learn how to integrate NEAR Intents into wallets and applications.
 </Card>
 
-<Card title="View fees" icon="dollar-sign" href="/resources/fees">
-  Understand platform fees and authentication benefits.
+<Card title="View supported chains" icon="link" href="/resources/chain-support">
+  See all supported blockchains and tokens.
 </Card>
 
-<Card title="API reference" icon="book" href="/api-reference/introduction">
-  Explore the complete 1Click API documentation.
+<Card title="Understand fees" icon="dollar-sign" href="/resources/fees">
+  Learn about platform fees and how to obtain free API access.
 </Card>
 </CardGroup>

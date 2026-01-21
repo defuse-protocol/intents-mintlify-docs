@@ -1,0 +1,209 @@
+---
+title: "Fee Configuration"
+description: "Configure fee collection and aggregation for your 1Click Swap integration"
+icon: "wallet"
+---
+
+Configure how fees are collected and distributed when using the [1Click Swap API](/api-reference/introduction). As a distribution channel, you can specify fee parameters when requesting a quote.
+
+## Fee Parameters
+
+Include these parameters in the `appFees` object when requesting a quote:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `recipient` | string | Any NEAR-supported address (named account like `alice.near`, implicit account, or EVM-like address) |
+| `fee_bps` | number | Fee in basis points. `100` = `1.00%`. Fee is charged from the input token. |
+
+<Info>
+**Conversion formula:** `percentage = fee_bps / 10,000`
+
+For example, `fee_bps: 50` equals 0.5% fee.
+</Info>
+
+## Constraints
+
+- Fee range: `0` to `10,000` (where `10,000` = 100%)
+
+## How Fees Are Applied
+
+Fees are calculated differently depending on the swap type:
+
+<Tabs>
+<Tab title="EXACT_IN">
+For EXACT_IN swaps, the fee is deducted from your input amount before the swap:
+
+1. `net_in = amount_in * (1 - p)` where `p = fee_bps / 10,000`
+2. The quote calculates `amount_out` from `net_in`
+3. `fee_amount = amount_in - net_in` (deducted in input token)
+
+**Example:**
+- Input: `amount_in = 1,000,000`, `fee_bps = 100` (1%)
+- Calculation: `net_in = 1,000,000 * (1 - 0.01) = 990,000`
+- User deposits `1,000,000` and quote calculates output from `990,000`
+- Fee: `10,000` units (in input token)
+</Tab>
+
+<Tab title="EXACT_OUT">
+For EXACT_OUT swaps, the fee increases the required input amount:
+
+1. `net_in = min_amount_in * (1 + p)` where `p = fee_bps / 10,000`
+2. `fee_amount = net_in - min_amount_in` (deducted in input token)
+3. If user deposits more than `min_amount_in`, fees are deducted from actual `amount_in`
+
+**Example:**
+- Input: `min_amount_in = 500,000`, `fee_bps = 100` (1%)
+- Calculation: `net_in = 500,000 * (1 + 0.01) = 505,000`
+- User must deposit `505,000` to receive the exact output amount
+- Fee: `5,000` units (in input token)
+</Tab>
+</Tabs>
+
+## Example Quote Request
+
+```json
+{
+  "dry": false,
+  "swapType": "EXACT_IN",
+  "originAsset": "nep141:wrap.near",
+  "destinationAsset": "nep141:usdt.tether-token.near",
+  "amount": "1000000000000000000000000",
+  "recipient": "user.near",
+  "recipientType": "INTENTS",
+  "refundTo": "user.near",
+  "refundType": "INTENTS",
+  "appFees": {
+    "recipient": "your-fee-wallet.near",
+    "fee_bps": 50
+  }
+}
+```
+
+## Fee Aggregation
+
+For high-volume integrations that collect fees in multiple tokens, you can aggregate all fees into a single destination asset using the ANY_INPUT feature. This automatically converts incoming fees and withdraws them when reaching a threshold.
+
+### Overview
+
+When you collect fees from swaps, you may receive them in many different tokens. Fee aggregation:
+
+1. Accepts deposits in any supported token
+2. Automatically swaps all deposits to your chosen `destinationAsset`
+3. Withdraws to your specified address when the pool reaches **$1,000 USD**
+
+### Setup
+
+<Steps>
+<Step title="Create an ANY_INPUT quote">
+Request a quote with `originAsset: "1cs:any"` to get a dedicated deposit address for fee collection.
+</Step>
+
+<Step title="Use the deposit address for app fees">
+Use the `depositAddress` from the quote response as the `appFees.recipient` in your user quotes.
+</Step>
+
+<Step title="Automatic processing">
+The system automatically swaps incoming tokens to your `destinationAsset` and withdraws when the $1,000 threshold is reached.
+</Step>
+</Steps>
+
+### How It Works
+
+- Use `originAsset: "1cs:any"` with `amount: "0"`
+- A background job continuously polls, swaps all deposits to `destinationAsset`, and withdraws when the threshold is reached
+- Failed swap attempts retry every 5 minutes
+
+<Warning>
+**No refunds.** If a swap attempt fails, it retries automatically. Set `refundTo` to an address you control as a safety measure.
+</Warning>
+
+### Authentication
+
+<Info>
+You must include an `Authorization: Bearer YOUR_JWT_TOKEN` header to receive the quote and deposit address. Get your API key from the [Partner Dashboard](https://partners.near-intents.org/).
+</Info>
+
+### Example ANY_INPUT Request
+
+Create an ANY_INPUT quote to get your fee collection address:
+
+```json
+{
+  "dry": false,
+  "swapType": "ANY_INPUT",
+  "slippageTolerance": 0,
+  "originAsset": "1cs:any",
+  "depositType": "INTENTS",
+  "destinationAsset": "nep141:eth-0xdac17f958d2ee523a2206206994597c13d831ec7.omft.near",
+  "amount": "0",
+  "refundTo": "your-wallet.near",
+  "refundType": "INTENTS",
+  "recipient": "0x1ddA60d784483FBB54304c68830d42A706327C6d",
+  "recipientType": "DESTINATION_CHAIN",
+  "referral": "YOUR_REFERRAL",
+  "quoteWaitingTimeMs": 10000
+}
+```
+
+<Tip>
+Set `quoteWaitingTimeMs` to 5000-10000ms for optimal performance.
+</Tip>
+
+### Key Fields
+
+| Field | Description |
+|-------|-------------|
+| `originAsset` | Must be `"1cs:any"` for fee aggregation |
+| `destinationAsset` | Token you want to collect fees in |
+| `recipient` | Address where converted fees will be withdrawn |
+| `recipientType` | `"DESTINATION_CHAIN"` or `"INTENTS"` |
+| `refundTo` | Set to an address you control |
+
+### Checking Withdrawals
+
+Use the `/v0/any-input/withdrawals` endpoint to retrieve withdrawal records for your deposit address.
+
+**Request:**
+
+```bash
+GET /v0/any-input/withdrawals?depositAddress=YOUR_DEPOSIT_ADDRESS
+```
+
+**Response:**
+
+```json
+{
+  "recipient": "0x88b9da55b59a59751424b357cf8aea239770944c",
+  "affiliateRecipient": "2fd5aba4dc4729dcaec040242fc3b0b1faf8c81f74831c7c7843c6a96ad28add",
+  "asset": "nep141:base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+  "withdrawals": [
+    {
+      "status": "SUCCESS",
+      "amountOut": "140735",
+      "amountOutFormatted": "0.140735",
+      "amountOutUsd": "0.140693483175",
+      "withdrawFee": "2400",
+      "withdrawFeeFormatted": "0.0024",
+      "withdrawFeeUsd": "0.0023992919999999995",
+      "timestamp": "2025-10-07T10:16:19.702Z",
+      "hash": "0xcc005d3e3340c61b1240905c4e383d8b8ecb114a827bef3e0394293997406621"
+    }
+  ]
+}
+```
+
+**Response Fields:**
+
+| Field | Description |
+|-------|-------------|
+| `status` | Withdrawal status (e.g., `SUCCESS`) |
+| `amountOut` | Raw amount withdrawn |
+| `amountOutFormatted` | Human-readable amount |
+| `amountOutUsd` | USD value at time of withdrawal |
+| `withdrawFee` | Fee charged for withdrawal |
+| `timestamp` | When the withdrawal occurred |
+| `hash` | Transaction hash |
+
+<Info>
+Each response contains up to 50 records, ordered by timestamp descending.
+</Info>

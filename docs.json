@@ -8,7 +8,10 @@
     "dark": "#d94300"
   },
   "favicon": "/favicon.svg",
-  "openapi": "/api-reference/openapi.json",
+  "openapi": [
+    "/api-reference/openapi.json",
+    "/api-reference/explorer-openapi.yaml"
+  ],
   "navigation": {
     "tabs": [
       {
@@ -44,19 +47,37 @@
         "tab": "API reference",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Authentication",
+            
             "pages": [
-              "api-reference/introduction",
               "api-reference/authentication"
             ]
           },
+
           {
-            "group": "API Endpoints",
+            "group": "Swap API",
             "pages": [
+              {
+                "group": "1Click Swap API",
+                "icon": "bolt",
+                "pages": [
+                  "api-reference/introduction",
+                  "api-reference/fee-config",
+                  "api-reference/terms-of-service"
+                ]
+              },
               "api-reference/endpoint/tokens",
               "api-reference/endpoint/quote",
               "api-reference/endpoint/deposit-submit",
               "api-reference/endpoint/status"
+            ]
+          },
+          {
+            "group": "Explorer API",
+            "pages": [
+              "api-reference/explorer/introduction",
+              "api-reference/explorer/transactions",
+              "api-reference/explorer/transactions-pages"
             ]
           }
         ]
