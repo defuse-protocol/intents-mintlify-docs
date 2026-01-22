@@ -20,36 +20,8 @@ Instead of navigating multiple bridges and DEXs, NEAR Intents lets you specify w
 
 If anything goes wrong, your funds are automatically refunded.
 
-## Option 1: Use the SDK (Recommended)
 
-The TypeScript SDK provides the simplest integration path.
-
-```bash
-npm install @defuse-protocol/one-click-sdk-typescript
-```
-
-```typescript
-import { oneClickSwap } from '@defuse-protocol/one-click-sdk-typescript';
-
-const result = await oneClickSwap({
-  originAsset: "nep141:wrap.near",
-  destinationAsset: "nep141:arb-0x912ce59144191c1204e64559fe8253a0e49e6548.omft.near",
-  amount: "100000000000000000000000", // 0.1 NEAR
-  recipient: "0xYourArbitrumAddress",
-  recipientType: "DESTINATION_CHAIN",
-  refundTo: "your-account.near",
-  refundType: "INTENTS"
-});
-```
-
-See the [example repository](https://github.com/near-examples/near-intents-examples) for a complete working implementation with step-by-step code.
-
-**Available SDKs:**
-- [TypeScript](https://github.com/defuse-protocol/one-click-sdk-typescript)
-- [Go](https://github.com/defuse-protocol/one-click-sdk-go)
-- [Rust](https://github.com/defuse-protocol/one-click-sdk-rs)
-
-## Option 2: Use the REST API
+## Perform your first swap
 
 <Steps>
 <Step title="Get supported tokens">

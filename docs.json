@@ -28,7 +28,8 @@
             "group": "Integration",
             "pages": [
               "integration/distribution-channels",
-              "integration/market-makers"
+              "integration/market-makers",
+              "integration/verifier-smart-contract"
             ]
           },
           {
@@ -36,9 +37,16 @@
             "pages": [
               "resources/faqs",
               "resources/fees",
-              "resources/security",
-              "resources/risk-and-compliance",
-              "resources/treasury-addresses"
+              {
+                "group": "Security & Compliance",
+                "icon": "shield-check",
+                "pages": [
+                  "security-compliance/risk-and-compliance",
+                  "security-compliance/security",
+                  "security-compliance/treasury-addresses",
+                  "security-compliance/terms-of-service"
+                ]
+              }
             ]
           }
         ]
@@ -62,8 +70,7 @@
                 "icon": "bolt",
                 "pages": [
                   "api-reference/introduction",
-                  "api-reference/fee-config",
-                  "api-reference/terms-of-service"
+                  "api-reference/fee-config"
                 ]
               },
               "api-reference/endpoint/tokens",
