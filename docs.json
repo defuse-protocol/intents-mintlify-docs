@@ -27,7 +27,22 @@
           {
             "group": "Integration",
             "pages": [
-              "integration/distribution-channels",
+              {
+                "group": "Distribution Channels",
+                "icon": "window",
+                "pages": [
+                  "integration/distribution-channels/introduction",
+                  {
+                    "group": "1Click Swap API",
+                    "icon": "bolt",
+                    "pages": [
+                      "integration/distribution-channels/1click-api/overview",
+                      "integration/distribution-channels/1click-api/authentication",
+                      "integration/distribution-channels/1click-api/fee-config"
+                    ]
+                  }
+                ]
+              },
               {
                 "group": "Market Makers",
                 "icon": "chart-line",
@@ -93,24 +108,8 @@
         "tab": "API reference",
         "groups": [
           {
-            "group": "Authentication",
-            
+            "group": "1Click Swap API",
             "pages": [
-              "api-reference/authentication"
-            ]
-          },
-
-          {
-            "group": "Swap API",
-            "pages": [
-              {
-                "group": "1Click Swap API",
-                "icon": "bolt",
-                "pages": [
-                  "api-reference/introduction",
-                  "api-reference/fee-config"
-                ]
-              },
               "api-reference/endpoint/tokens",
               "api-reference/endpoint/quote",
               "api-reference/endpoint/deposit-submit",

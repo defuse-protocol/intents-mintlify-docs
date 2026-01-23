@@ -1,0 +1,160 @@
+---
+title: "1Click Swap API"
+description: "REST API for cross-chain swaps powered by NEAR Intents"
+icon: "bolt"
+---
+
+1Click Swap simplifies NEAR Intents by temporarily transferring assets to a trusted swapping agent that coordinates with [Market Makers](/integration/market-makers/introduction) to execute your intent. This REST API abstracts the complexity of intent creation, solver coordination, and transaction execution.
+
+<Warning>
+By using the 1Click Swap API, you agree to the [1Click Terms of Service](/security-compliance/terms-of-service).
+</Warning>
+
+## Key Features
+
+- **Simple REST endpoints** for intent creation and management
+- **Automatic solver discovery** and competitive pricing
+- **Built-in transaction handling** and status tracking
+- **Cross-chain support** for seamless multi-chain swaps
+
+## How It Works
+
+```
+┌─────────────────┐     1. Request quote      ┌─────────────────┐
+│   Your App      │ ────────────────────────▶ │   1Click API    │
+│                 │                           │                 │
+│                 │ ◀──────────────────────── │                 │
+└─────────────────┘     Quote + deposit addr  └─────────────────┘
+        │                                              │
+        │ 2. User deposits                             │
+        │    to address                                │
+        ▼                                              ▼
+┌─────────────────┐                           ┌─────────────────┐
+│  Source Chain   │                           │  Market Makers  │
+│  (ETH, BTC...)  │                           │  execute swap   │
+└─────────────────┘                           └─────────────────┘
+                                                       │
+                                                       │ 3. Tokens delivered
+                                                       ▼
+                                              ┌─────────────────┐
+                                              │  Destination    │
+                                              │  (user wallet)  │
+                                              └─────────────────┘
+```
+
+1. **Request a quote** — Send the user's intent to the [`/v0/quote`](/api-reference/1click/quote) endpoint and receive the best available quote with a unique deposit address.
+
+2. **Transfer tokens** — If the quote is satisfactory, deposit tokens to the provided address. 1Click automatically begins the swap upon receipt.
+
+3. **Submit deposit transaction** (optional) — Use the [`/v0/deposit/submit`](/api-reference/1click/deposit-submit) endpoint with your transaction hash to speed up processing.
+
+4. **Monitor progress** (optional) — Query the swap status at any time with the [`/v0/status`](/api-reference/1click/status) endpoint.
+
+**Result:** The swap either succeeds with tokens delivered to your specified address, or fails with funds automatically refunded to your refund address.
+
+## Quick Start
+
+<Steps>
+  <Step title="Get an API key">
+    Register on the [Partner Dashboard](https://partners.near-intents.org/) to get your JWT token. Authenticated requests avoid the 0.1% platform fee.
+  </Step>
+
+  <Step title="Request a quote">
+    Call the [`/v0/quote`](/api-reference/1click/quote) endpoint with the user's swap details. You'll receive pricing and a unique deposit address.
+  </Step>
+
+  <Step title="User deposits tokens">
+    The user sends tokens to the deposit address. 1Click automatically begins the swap.
+  </Step>
+
+  <Step title="Monitor status">
+    Optionally poll [`/v0/status`](/api-reference/1click/status) to track progress and display updates to your user.
+  </Step>
+</Steps>
+
+<Info>
+Centralized exchanges (CEXes) often use intermediate or per-user deposit addresses that may not credit deposits sent via NEAR Intents until they are recognized or whitelisted. Send a small test amount before attempting full-scale transfers.
+</Info>
+
+## Swap Statuses
+
+| Status | Description |
+|--------|-------------|
+| `PENDING_DEPOSIT` | Awaiting deposit to the deposit address |
+| `KNOWN_DEPOSIT_TX` | Deposit transaction detected |
+| `PROCESSING` | Swap being executed by Market Makers |
+| `SUCCESS` | Funds delivered to the destination address |
+| `INCOMPLETE_DEPOSIT` | Deposit received but below required amount |
+| `REFUNDED` | Swap not completed, funds returned to refund address |
+| `FAILED` | Swap failed due to an error |
+
+## API Specification
+
+**Base URL:** `https://1click.chaindefuser.com/`
+
+Auto-generate clients using the [OpenAPI spec](https://1click.chaindefuser.com/docs/v0/openapi.yaml).
+
+<Tip>
+Use `dry: true` to preview quote pricing without generating a transaction. Set `dry: false` only at confirmation to reduce system load.
+</Tip>
+
+## SDKs
+
+Pre-built SDKs for popular languages:
+
+<CardGroup cols={3}>
+  <Card title="TypeScript" icon="js" href="https://github.com/defuse-protocol/one-click-sdk-typescript">
+    npm package
+  </Card>
+  <Card title="Go" icon="golang" href="https://github.com/defuse-protocol/one-click-sdk-go">
+    Go module
+  </Card>
+  <Card title="Rust" icon="rust" href="https://github.com/defuse-protocol/one-click-sdk-rs">
+    Cargo crate
+  </Card>
+</CardGroup>
+
+## Earning Fees
+
+Distribution channels can earn fees on every swap. Configure fee collection when requesting quotes:
+
+```json
+{
+  "appFees": {
+    "recipient": "your-wallet.near",
+    "fee_bps": 50
+  }
+}
+```
+
+This charges a 0.5% fee (50 basis points) from the input token, sent to your wallet.
+
+<Card title="Fee Configuration Guide" icon="wallet" href="/integration/distribution-channels/1click-api/fee-config">
+  Learn how to configure fees and set up fee aggregation for high-volume integrations
+</Card>
+
+## Example Integration
+
+See a complete example in the [near-intents-examples](https://github.com/near-examples/near-intents-examples) repository, which demonstrates:
+
+- Requesting quotes
+- Handling deposits
+- Monitoring swap status
+- Error handling and refunds
+
+## API Reference
+
+<CardGroup cols={2}>
+  <Card title="GET /v0/tokens" icon="list" href="/api-reference/1click/tokens">
+    Get supported tokens
+  </Card>
+  <Card title="POST /v0/quote" icon="chart-line" href="/api-reference/1click/quote">
+    Request swap quote
+  </Card>
+  <Card title="POST /v0/deposit/submit" icon="paper-plane" href="/api-reference/1click/deposit-submit">
+    Submit deposit transaction
+  </Card>
+  <Card title="GET /v0/status" icon="magnifying-glass" href="/api-reference/1click/status">
+    Check swap status
+  </Card>
+</CardGroup>

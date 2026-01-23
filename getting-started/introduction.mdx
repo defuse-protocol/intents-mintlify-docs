@@ -1,7 +1,7 @@
 ---
 title: "Introduction"
 description: "A multichain transaction protocol where users specify desired outcomes and market makers compete for best execution"
-icon: 'sparkles'
+icon: 'book-open'
 ---
 
 ## What is NEAR Intents?
@@ -9,6 +9,28 @@ icon: 'sparkles'
 NEAR Intents is a multichain transaction protocol that simplifies cross-chain interactions. Instead of navigating complex bridges, DEXs, and liquidity pools yourself, you simply declare your desired outcome and competitive market makers handle the rest.
 
 **An intent is a declaration of what you want, not how to do it.** Rather than constructing specific transactions across multiple chains, you express your goal: "I have 1 ETH on Ethereum, I want USDC on Arbitrum." Market makers compete to fulfill your intent, and smart contracts guarantee atomic execution.
+{/* 
+<iframe
+  width="100%"
+  height="400"
+  src="https://www.youtube.com/embed/U8ngm2hR4a4"
+  title="NEAR Intents Overview"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>
+
+
+
+<iframe
+  width="100%"
+  height="400"
+  src="https://www.youtube.com/embed/mOGD2gzZJqE"
+  title="NEAR Intents Overview"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe> */}
 
 ## How it works
 
@@ -118,7 +140,7 @@ NEAR Intents consists of three core components working together:
 
 | Component | Role | Learn More |
 |-----------|------|------------|
-| **Distribution Channels** | Applications (wallets, exchanges, dApps) that enable users to create and broadcast intents | [Integration Guide](/integration/distribution-channels) |
+| **Distribution Channels** | Applications (wallets, exchanges, dApps) that enable users to create and broadcast intents | [Integration Guide](/integration/distribution-channels/introduction) |
 | **Market Makers** | Agents that compete to fulfill intents, providing liquidity and execution | [Become a Market Maker](/integration/market-makers/introduction) |
 | **Verifier Contract** | On-chain verification and settlement layer deployed on NEAR Protocol | [Technical Reference](/integration/verifier-contract/introduction) |
 
@@ -135,7 +157,7 @@ Choose your path based on your role:
   Complete your first cross-chain token swap using the 1Click API.
 </Card>
 
-<Card title="Build a distribution channel" icon="code" href="/integration/distribution-channels">
+<Card title="Build a distribution channel" icon="code" href="/integration/distribution-channels/introduction">
   Add NEAR Intents to your wallet, exchange, or dApp with our integration guide.
 </Card>
 

@@ -1,0 +1,36 @@
+---
+title: 'Introduction'
+description: 'Build user-facing applications powered by NEAR Intents'
+icon: 'book-open'
+---
+
+Distribution Channels are the user-facing applications, wallets, and exchanges that make NEAR Intents accessible to end users. They handle intent creation, management, and asset delivery, while [Market Makers](/integration/market-makers/introduction) handle fulfillment and pricing.
+
+## 1Click Swap API
+
+The **1Click Swap API** is the easiest way to build a distribution channel. It's a REST API that handles intent creation, market maker coordination, and transaction execution—so you can focus on your user experience instead of protocol complexity.
+
+<Card title="1Click Swap API" icon="bolt" href="/integration/distribution-channels/1click-api/overview">
+  Get started with the recommended integration path
+</Card>
+
+## Direct Integration
+
+For advanced use cases requiring non-custodial flows or custom settlement logic, you can integrate directly with the [Verifier Contract](/integration/verifier-contract/introduction). This gives you full control over intent creation and on-chain execution.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="1Click API Overview" icon="bolt" href="/integration/distribution-channels/1click-api/overview">
+    Learn how the 1Click API works and get started
+  </Card>
+  <Card title="Get an API Key" icon="key" href="/integration/distribution-channels/1click-api/authentication">
+    Register for authenticated API access
+  </Card>
+  <Card title="Fee Configuration" icon="wallet" href="/integration/distribution-channels/1click-api/fee-config">
+    Set up fee collection for your integration
+  </Card>
+  <Card title="Example Repository" icon="github" href="https://github.com/near-examples/near-intents-examples">
+    Complete TypeScript implementation
+  </Card>
+</CardGroup>
