@@ -1,5 +1,52 @@
 ---
 title: "Fees"
-description: ""
+description: "All fees that apply to NEAR Intents transactions and integrations"
 icon: "dollar-sign"
 ---
+
+## Protocol Fee
+
+- **0.0001% (1 pip)** per transaction
+- Collected on-chain by the [`intents.near`](https://nearblocks.io/address/intents.near) smart contract
+- Applies to every transfer, swap, or transaction
+- Fees are sent to the [`fee_collector`](https://near-intents.org/account?user=near:7066024d3f20f94de601c003163367873cca78507eeca4df66d9be645f197f05)
+
+## Near-Intents.org Fee
+
+- **0.2%** fee on swaps executed through [near-intents.org](https://near-intents.org)
+- Collected by the proprietary distribution channel in addition to the protocol fee
+- Fees are sent to [`fefundsadmin.sputnik-dao.near`](https://nearblocks.io/address/fefundsadmin.sputnik-dao.near)
+
+## Withdrawal Fees
+
+- **0.1%** fee for **NEAR**, **ZEC**, and **STRK** tokens withdrawn to the **Solana** network
+
+## 1Click Swap API Fees
+
+| Authentication | Fee |
+|----------------|-----|
+| **With API key** | Only the 0.0001% protocol fee |
+| **Without API key** | Additional **0.1%** fee |
+
+<Tip>
+[Apply for an API key](https://partners.near-intents.org/) to avoid the 0.1% unauthenticated fee.
+</Tip>
+
+### Distribution Channel Fees
+
+Developers and distribution channels can add their own fees using the [`appFees`](/api-reference/fee-config) parameter when requesting quotes.
+
+```json
+{
+  "appFees": {
+    "recipient": "your-wallet.near",
+    "fee_bps": 50
+  }
+}
+```
+
+This example charges a 0.5% fee (50 basis points) from the input token.
+
+<Card title="Fee Configuration Guide" icon="wallet" href="/api-reference/fee-config">
+  Learn how to configure and collect fees from your integration
+</Card>
