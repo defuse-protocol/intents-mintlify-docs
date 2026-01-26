@@ -10,30 +10,9 @@ NEAR Intents is a multichain transaction protocol that simplifies cross-chain in
 
 **An intent is a declaration of what you want, not how to do it.** Rather than constructing specific transactions across multiple chains, you express your goal: "I have 1 ETH on Ethereum, I want USDC on Arbitrum." Market makers compete to fulfill your intent, and smart contracts guarantee atomic execution.
 
-{/* 
-<iframe
-  width="100%"
-  height="400"
-  src="https://www.youtube.com/embed/U8ngm2hR4a4"
-  title="NEAR Intents Overview"
-  frameBorder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  allowFullScreen
-></iframe>
-
-
-
-<iframe
-  width="100%"
-  height="400"
-  src="https://www.youtube.com/embed/mOGD2gzZJqE"
-  title="NEAR Intents Overview"
-  frameBorder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  allowFullScreen
-></iframe> */}
-
 ## How it works
+
+![NEAR Intents Architecture](/images/diagrams/intents-overview.svg)
 
 <Steps>
 <Step title="You create an intent">
@@ -41,11 +20,11 @@ NEAR Intents is a multichain transaction protocol that simplifies cross-chain in
 </Step>
 
 <Step title="Market makers compete">
-  Multiple market makers bid to fulfill your intent, competing on price, speed, and execution quality.
+  Multiple market makers bid to fulfill your intent (quote request), competing on price, speed, and execution quality.
 </Step>
 
 <Step title="Smart contracts verify">
-  The NEAR Intents protocol ensures atomic execution—your swap either completes fully or you're automatically refunded.
+ Approved quotes are submitted to a smart contract on the NEAR blockchain ensuring atomic execution; your swap either completes fully or you're automatically refunded.
 </Step>
 
 <Step title="You receive your tokens">
@@ -109,16 +88,7 @@ NEAR Intents is a multichain transaction protocol that simplifies cross-chain in
 </Tab>
 </Tabs>
 
-## Architecture overview
-
-![NEAR Intents Architecture](/images/diagrams/architecture.svg)
-NEAR Intents consists of three core components working together:
-
-| Component | Role | Learn More |
-|-----------|------|------------|
-| **Distribution Channels** | Applications (wallets, exchanges, dApps) that enable users to create and broadcast intents | [Integration Guide](/integration/distribution-channels/introduction) |
-| **Market Makers** | Agents that compete to fulfill intents, providing liquidity and execution | [Become a Market Maker](/integration/market-makers/introduction) |
-| **Verifier Contract** | On-chain verification and settlement layer deployed on NEAR Protocol | [Technical Reference](/integration/verifier-contract/introduction) |
+## 
 
 <Info>
 **Recently renamed**: NEAR Intents was previously known as "Defuse". While documentation is being updated, you may see references to both names.
@@ -129,7 +99,7 @@ NEAR Intents consists of three core components working together:
 Choose your path based on your role:
 
 <CardGroup cols={2}>
-<Card title="Execute your first swap" icon="rocket" href="/getting-started/quickstart">
+<Card title="Execute your first swap" icon="arrows-rotate" href="/getting-started/quickstart">
   Complete your first cross-chain token swap using the 1Click API.
 </Card>
 
