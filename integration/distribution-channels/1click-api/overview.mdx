@@ -1,7 +1,8 @@
 ---
-title: "1Click Swap API"
+title: "Getting Started with 1Click Swap API"
+sidebarTitle: 'Getting Started'
 description: "REST API for cross-chain swaps powered by NEAR Intents"
-icon: "bolt"
+icon: "rocket"
 ---
 
 1Click Swap simplifies NEAR Intents by temporarily transferring assets to a trusted swapping agent that coordinates with [Market Makers](/integration/market-makers/introduction) to execute your intent. This REST API abstracts the complexity of intent creation, solver coordination, and transaction execution.
@@ -19,27 +20,20 @@ By using the 1Click Swap API, you agree to the [1Click Terms of Service](/securi
 
 ## How It Works
 
-```
-┌─────────────────┐     1. Request quote      ┌─────────────────┐
-│   Your App      │ ────────────────────────▶ │   1Click API    │
-│                 │                           │                 │
-│                 │ ◀──────────────────────── │                 │
-└─────────────────┘     Quote + deposit addr  └─────────────────┘
-        │                                              │
-        │ 2. User deposits                             │
-        │    to address                                │
-        ▼                                              ▼
-┌─────────────────┐                           ┌─────────────────┐
-│  Source Chain   │                           │  Market Makers  │
-│  (ETH, BTC...)  │                           │  execute swap   │
-└─────────────────┘                           └─────────────────┘
-                                                       │
-                                                       │ 3. Tokens delivered
-                                                       ▼
-                                              ┌─────────────────┐
-                                              │  Destination    │
-                                              │  (user wallet)  │
-                                              └─────────────────┘
+```mermaid
+sequenceDiagram
+    participant App as Your App
+    participant API as 1Click API
+    participant Source as Source Chain
+    participant MM as Market Makers
+    participant Dest as Destination
+
+    App->>API: 1. Request quote
+    API-->>App: Quote + deposit address
+    App->>Source: 2. User deposits tokens
+    Source->>API: Deposit detected
+    API->>MM: 3. Execute swap
+    MM->>Dest: 4. Deliver tokens
 ```
 
 1. **Request a quote** — Send the user's intent to the [`/v0/quote`](/api-reference/1click/quote) endpoint and receive the best available quote with a unique deposit address.

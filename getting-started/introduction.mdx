@@ -9,6 +9,7 @@ icon: 'book-open'
 NEAR Intents is a multichain transaction protocol that simplifies cross-chain interactions. Instead of navigating complex bridges, DEXs, and liquidity pools yourself, you simply declare your desired outcome and competitive market makers handle the rest.
 
 **An intent is a declaration of what you want, not how to do it.** Rather than constructing specific transactions across multiple chains, you express your goal: "I have 1 ETH on Ethereum, I want USDC on Arbitrum." Market makers compete to fulfill your intent, and smart contracts guarantee atomic execution.
+
 {/* 
 <iframe
   width="100%"
@@ -110,33 +111,8 @@ NEAR Intents is a multichain transaction protocol that simplifies cross-chain in
 
 ## Architecture overview
 
+![NEAR Intents Architecture](/images/diagrams/architecture.svg)
 NEAR Intents consists of three core components working together:
-
-```
-┌─────────────────────┐          ┌─────────────────────┐
-│  Distribution       │  intent  │                     │
-│  Channels           │─────────▶│    Message Bus      │
-│  (wallets, dApps)   │          │                     │
-└─────────────────────┘          └──────────┬──────────┘
-                                            │ broadcast
-                                            ▼
-                                 ┌─────────────────────┐
-                                 │   Market Makers     │
-                                 │   (compete to fill) │
-                                 └──────────┬──────────┘
-                                            │ signed intents
-                                            ▼
-                                 ┌─────────────────────┐
-                                 │  Verifier Contract  │
-                                 │  (NEAR blockchain)  │
-                                 └──────────┬──────────┘
-                                            │ atomic settlement
-                                            ▼
-                                 ┌─────────────────────┐
-                                 │  Tokens delivered   │
-                                 │  to destination     │
-                                 └─────────────────────┘
-```
 
 | Component | Role | Learn More |
 |-----------|------|------------|
