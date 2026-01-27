@@ -182,5 +182,8 @@
       "x": "https://x.com/near_intents",
       "github": "https://github.com/defuse-protocol"
     }
+  },
+  "appearance": {
+    "strict": true
   }
 }
