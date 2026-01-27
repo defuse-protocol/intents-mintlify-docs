@@ -29,12 +29,12 @@
             "pages": [
               {
                 "group": "Distribution Channels",
-                "icon": "objects-column",
+                "icon": "arrow-pointer",
                 "pages": [
                   "integration/distribution-channels/introduction",
                   {
                     "group": "1Click Swap API",
-                    "icon": "bolt",
+                    "icon": "computer-mouse",
                     "pages": [
                       "integration/distribution-channels/1click-api/overview",
                       "integration/distribution-channels/1click-api/authentication",

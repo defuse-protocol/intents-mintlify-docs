@@ -4,26 +4,17 @@ description: "Execute your first cross-chain swap using NEAR Intents"
 icon: "arrows-rotate"
 ---
 
-Execute a cross-chain token swap using the 1Click Swap API. You'll swap tokens from one blockchain to another without managing bridges or liquidity—NEAR Intents handles everything automatically.
+Execute a cross-chain token swap using the 1Click Swap API. You'll swap tokens from one blockchain to another without managing bridges or liquidity. NEAR Intents handles everything automatically.
 
 <Info>
-**Prerequisites**: A small amount of tokens on a [supported chain](/resources/chain-support). Start with small minimal amounts for your first swap. Unfortunatly, there is no testnet currently available.
+**Prerequisites**: 
+
+- A small amount of tokens on ANY [supported chain](/resources/chain-support).
+- A [JWT token](/integration/distribution-channels/1click-api/authentication) to avoid the 0.1% fee.
+
+**There is no testnet** - use small amounts for test swaps.
+
 </Info>
-
-<Tip>
-For TypeScript projects, consider using the [official SDK](https://github.com/defuse-protocol/one-click-sdk-typescript) which provides type-safe methods and cleaner code. See the [example repository](https://github.com/near-examples/near-intents-examples) for a complete implementation.
-</Tip>
-
-## How It Works
-
-Instead of navigating multiple bridges and DEXs, NEAR Intents lets you specify what you want (e.g., "swap 0.1 NEAR for ARB on Arbitrum") and competitive market makers race to give you the best execution:
-
-1. Request a quote for your desired swap
-2. Send tokens to a unique deposit address
-3. Receive your swapped tokens on the destination chain
-
-If anything goes wrong, your funds are automatically refunded.
-
 
 ## Perform your first swap
 
@@ -54,7 +45,7 @@ The response includes tokens with their `assetId` in this format:
 </Step>
 
 <Step title="Request a quote">
-Request a quote with your swap parameters. Include your JWT token to avoid the 0.1% fee.
+Request a quote with your swap parameters. Include your [JWT token](/integration/distribution-channels/1click-api/authentication) to avoid the 0.1% fee.
 
 <CodeGroup>
 ```bash cURL
@@ -235,34 +226,25 @@ View detailed transaction info on the [NEAR Intents Explorer](https://explorer.n
 </Step>
 </Steps>
 
-## Authentication
-
-Get a JWT token from the [Partner Dashboard](https://partners.near-intents.org/) to avoid the 0.1% (10 basis points) fee. Include it in your requests:
-
-```
-Authorization: Bearer YOUR_JWT_TOKEN
-```
-
-See the [Authentication guide](/integration/distribution-channels/1click-api/authentication) for details.
-
 ## Next Steps
 
 <CardGroup cols={2}>
-<Card title="1Click API Overview" icon="bolt" href="/integration/distribution-channels/1click-api/overview">
-  Complete 1Click Swap API documentation
+<Card title="Clone the Example Repo" icon="github" href="https://github.com/near-examples/near-intents-examples">
+  Clone and run a working TypeScript implementation to get started quickly.
 </Card>
 
-<Card title="Example Repository" icon="github" href="https://github.com/near-examples/near-intents-examples">
-  Working TypeScript implementation with SDK
+<Card title="Watch NEAR Intents 102" icon="youtube" href="https://www.youtube.com/watch?v=U8ngm2hR4a4">
+  Follow along with this guided workshop explaining all the steps in detail.
+</Card>
+
+<Card title="Create a Distribution Channel" icon="arrow-pointer" href="/integration/distribution-channels/1click-api/overview">
+  The easiest way to build a distribution channel.
 </Card>
 
 <Card title="NEAR Intents Explorer" icon="magnifying-glass" href="https://explorer.near-intents.org">
   Track transactions and view swap history
 </Card>
 
-<Card title="Fee Configuration" icon="wallet" href="/integration/distribution-channels/1click-api/fee-config">
-  Set up fee collection for your integration
-</Card>
 </CardGroup>
 
 ## Troubleshooting

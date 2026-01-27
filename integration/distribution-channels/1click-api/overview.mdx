@@ -1,5 +1,5 @@
 ---
-title: "Getting Started with 1Click Swap API"
+title: "1Click Swap API"
 sidebarTitle: 'Getting Started'
 description: "REST API for cross-chain swaps powered by NEAR Intents"
 icon: "rocket"
@@ -33,51 +33,25 @@ By using the 1Click Swap API, you agree to the [1Click Terms of Service](/securi
 
 ## How It Works
 
-```mermaid
-sequenceDiagram
-    participant App as Your App
-    participant API as 1Click API
-    participant Source as Source Chain
-    participant MM as Market Makers
-    participant Dest as Destination
-
-    App->>API: 1. Request quote
-    API-->>App: Quote + deposit address
-    App->>Source: 2. User deposits tokens
-    Source->>API: Deposit detected
-    API->>MM: 3. Execute swap
-    MM->>Dest: 4. Deliver tokens
-```
-
-1. **Request a quote** — Send the user's intent to the [`/v0/quote`](/api-reference/1click/quote) endpoint and receive the best available quote with a unique deposit address.
-
-2. **Transfer tokens** — If the quote is satisfactory, deposit tokens to the provided address. 1Click automatically begins the swap upon receipt.
-
-3. **Submit deposit transaction** (optional) — Use the [`/v0/deposit/submit`](/api-reference/1click/deposit-submit) endpoint with your transaction hash to speed up processing.
-
-4. **Monitor progress** (optional) — Query the swap status at any time with the [`/v0/status`](/api-reference/1click/status) endpoint.
-
-**Result:** The swap either succeeds with tokens delivered to your specified address, or fails with funds automatically refunded to your refund address.
-
-## Quick Start
-
 <Steps>
   <Step title="Get an API key">
     Register on the [Partner Dashboard](https://partners.near-intents.org/) to get your JWT token. Authenticated requests avoid the 0.1% platform fee.
   </Step>
 
   <Step title="Request a quote">
-    Call the [`/v0/quote`](/api-reference/1click/quote) endpoint with the user's swap details. You'll receive pricing and a unique deposit address.
+    Call the [`/v0/quote`](/api-reference/endpoint/quote) endpoint with the user's swap details. You'll receive pricing and a unique deposit address.
   </Step>
 
   <Step title="User deposits tokens">
-    The user sends tokens to the deposit address. 1Click automatically begins the swap.
+    The user sends tokens to the deposit address. 1Click automatically begins the swap. Optionally use [`/v0/deposit/submit`](/api-reference/endpoint/deposit-submit) with your transaction hash to speed up processing.
   </Step>
 
   <Step title="Monitor status">
-    Optionally poll [`/v0/status`](/api-reference/1click/status) to track progress and display updates to your user.
+    Poll [`/v0/status`](/api-reference/endpoint/status) to track progress and display updates to your user.
   </Step>
 </Steps>
+
+**Result:** The swap either succeeds with tokens delivered to your specified address, or fails with funds automatically refunded to your refund address.
 
 <Info>
 Centralized exchanges (CEXes) often use intermediate or per-user deposit addresses that may not credit deposits sent via NEAR Intents until they are recognized or whitelisted. Send a small test amount before attempting full-scale transfers.
