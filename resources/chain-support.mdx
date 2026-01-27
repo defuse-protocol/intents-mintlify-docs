@@ -267,7 +267,7 @@ NEAR Intents supports multiple signing standards to work with different wallet t
 | **BIP-322** | Bitcoin wallets: Sparrow, Bitcoin Knots, Bitcoin Core | ⚙️ In progress |
 
 <Tip>
-For technical details on how intent signing works, see [Signing Intents](/essentials/code).
+For technical details on how intent signing works, see [Signing Intents](/integration/verifier-contract/signing-intents).
 </Tip>
 
 ## Token support
@@ -277,7 +277,7 @@ Each supported chain provides access to native tokens and popular standards:
 <CardGroup cols={2}>
 <Card>
   <img src="/images/chains/ethereum.svg" width="48" height="48" noZoom style={{display: "block", margin: "0 auto 8px"}} />
-  <p style={{textAlign: "center", margin: "0 0 8px", fontWeight: 500}}>EVM Chains</p>
+  <p style={{textAlign: "center", margin: "0 0 8px", fontWeight: 500, color: "#ffffff"}}>EVM Chains</p>
   - Native tokens (ETH, BNB, MATIC, etc.)
   - ERC-20 tokens
   - Automatic token detection
@@ -285,7 +285,7 @@ Each supported chain provides access to native tokens and popular standards:
 
 <Card>
   <img src="/images/chains/bitcoin.svg" width="48" height="48" noZoom style={{display: "block", margin: "0 auto 8px"}} />
-  <p style={{textAlign: "center", margin: "0 0 8px", fontWeight: 500}}>Bitcoin Networks</p>
+  <p style={{textAlign: "center", margin: "0 0 8px", fontWeight: 500, color: "#ffffff"}}>Bitcoin Networks</p>
   - BTC (Bitcoin)
   - DOGE (Dogecoin)
   - ZEC (Zcash - transparent only)
@@ -293,15 +293,20 @@ Each supported chain provides access to native tokens and popular standards:
 
 <Card>
   <img src="/images/chains/near-protocol.svg" width="48" height="48" noZoom style={{display: "block", margin: "0 auto 8px"}} />
-  <p style={{textAlign: "center", margin: "0 0 8px", fontWeight: 500}}>NEAR Ecosystem</p>
+  <p style={{textAlign: "center", margin: "0 0 8px", fontWeight: 500, color: "#ffffff"}}>NEAR Ecosystem</p>
   - NEAR native token
   - NEP-141 fungible tokens
   - Bridged assets
 </Card>
 
 <Card>
-  <img src="/images/chains/solana.svg" width="48" height="48" noZoom style={{display: "block", margin: "0 auto 8px"}} />
-  <p style={{textAlign: "center", margin: "0 0 8px", fontWeight: 500}}>Other Chains</p>
+  <div style={{display: "flex", justifyContent: "center", alignItems: "center", gap: "12px", height: "48px", margin: "0 auto 8px"}}>
+    <img src="/images/chains/solana.svg" width="40" height="40" noZoom />
+    <img src="/images/chains/sui.svg" width="40" height="40" noZoom />
+    <img src="/images/chains/ton.svg" width="40" height="40" noZoom />
+    <img src="/images/chains/xrp.svg" width="40" height="40" noZoom />
+  </div>
+  <p style={{textAlign: "center", margin: "0 0 8px", fontWeight: 500, color: "#ffffff"}}>Other Layer 1 Chains</p>
   - SOL (Solana) + SPL tokens
   - SUI native and wrapped tokens
   - XLM (Stellar) + issued assets
@@ -348,16 +353,16 @@ This returns real-time data on available tokens, their addresses, decimals, and 
 ## Next steps
 
 <CardGroup cols={2}>
-<Card title="Start swapping" icon="rocket" href="/getting-started/quickstart">
+<Card title="Start swapping" icon="rocket" href="/getting-started/first-swap">
   Execute your first cross-chain swap in under 5 minutes.
 </Card>
 
-<Card title="Integrate into your app" icon="puzzle-piece" href="/intent-creators/examples">
+<Card title="Integrate into your app" icon="puzzle-piece" href="/integration/distribution-channels/introduction">
   Learn how to integrate NEAR Intents into wallets and applications.
 </Card>
 
-<Card title="View supported chains" icon="link" href="/resources/chain-support">
-  See all supported blockchains and tokens.
+<Card title="Become a market maker" icon="chart-line" href="/integration/market-makers/introduction">
+  Provide liquidity and fulfill user intents profitably.
 </Card>
 
 <Card title="Understand fees" icon="dollar-sign" href="/resources/fees">

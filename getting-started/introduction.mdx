@@ -1,14 +1,14 @@
 ---
 title: "Introduction"
-description: "A multichain transaction protocol where users specify desired outcomes and market makers compete for best execution"
+description: "Swap tokens across any blockchain with a single request. Use your existing wallet on any chain."
 icon: 'book-open'
 ---
 
 ## What is NEAR Intents?
 
-NEAR Intents is a multichain transaction protocol that simplifies cross-chain interactions. Instead of navigating complex bridges, DEXs, and liquidity pools yourself, you simply declare your desired outcome and competitive market makers handle the rest.
+NEAR Intents is a multichain transaction protocol where users specify desired outcomes and market makers compete for best execution.
 
-**An intent is a declaration of what you want, not how to do it.** Rather than constructing specific transactions across multiple chains, you express your goal: "I have 1 ETH on Ethereum, I want USDC on Arbitrum." Market makers compete to fulfill your intent, and smart contracts guarantee atomic execution.
+**An intent is what you want, not how to get it.** Instead of manually bridging, wrapping, swapping, and bridging again—just say: "I have 1 ETH on Ethereum, I want USDC on Arbitrum." Market makers compete to fulfill your intent, and smart contracts guarantee atomic execution.
 
 ## How it works
 
@@ -37,6 +37,14 @@ NEAR Intents is a multichain transaction protocol that simplifies cross-chain in
 <CardGroup cols={1}>
 <Card title="Simplest cross-chain experience" icon="sparkles" horizontal>
   The easiest way to transact across multiple chains and protocols. One simple request replaces dozens of complex steps.
+</Card>
+
+<Card title="Use any account on any chain" icon="wallet" horizontal>
+  No need for accounts on multiple networks. Use your existing wallet on any supported chain—no NEAR account required.
+</Card>
+
+<Card title="Faster, cheaper bridging" icon="bridge" horizontal>
+  Powered by [Omnibridge](https://docs.near.org/chain-abstraction/omnibridge/overview), a revolutionary approach to cross-chain transfers that dramatically reduces fees and transaction times compared to traditional bridges.
 </Card>
 
 <Card title="Competitive pricing" icon="chart-line" horizontal>
@@ -99,7 +107,7 @@ NEAR Intents is a multichain transaction protocol that simplifies cross-chain in
 Choose your path based on your role:
 
 <CardGroup cols={2}>
-<Card title="Execute your first swap" icon="arrows-rotate" href="/getting-started/quickstart">
+<Card title="Execute your first swap" icon="arrows-rotate" href="/getting-started/first-swap">
   Complete your first cross-chain token swap using the 1Click API.
 </Card>
 
@@ -144,5 +152,13 @@ Choose your path based on your role:
   href="https://www.near.org/blog/unpacking-near-intents-a-deep-dive"
 >
   Explore the technical architecture and design philosophy behind NEAR Intents in this comprehensive blog post.
+</Card>
+
+<Card
+  title="Watch NEAR 101: Introduction to Intents"
+  icon="youtube"
+  href="https://www.youtube.com/watch?v=mOGD2gzZJqE"
+>
+  Learn the basics of what NEAR Intents are and how they work in this video overview.
 </Card>
 

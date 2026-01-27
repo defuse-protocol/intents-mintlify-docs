@@ -138,6 +138,11 @@
           "anchor": "System Status",
           "href": "https://status.near-intents.org/posts/dashboard",
           "icon": "server"
+        },
+        {
+          "anchor": "API Keys",
+          "href": "/integration/distribution-channels/1click-api/authentication",
+          "icon": "key"
         }
       ] 
     }
