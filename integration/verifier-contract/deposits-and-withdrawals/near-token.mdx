@@ -1,6 +1,6 @@
 ---
 title: 'NEAR Token Treatment'
-description: 'How to handle native NEAR tokens in the Verifier contract'
+description: 'How to use NEAR tokens with NEAR Intents'
 icon: 'coins'
 ---
 
@@ -10,13 +10,17 @@ Since NEAR is the native token for the NEAR blockchain, it requires special trea
 
 The wrapped NEAR token contract is deployed at [`wrap.near`](https://nearblocks.io/address/wrap.near). The source code can be found in the [NEAR core contracts repository](https://github.com/near/core-contracts/).
 
-## How to deposit NEAR
+## Using NEAR tokens for deposits
 
-<Warning>
-There is no way to deposit native NEAR directly into the Verifier contract.
-</Warning>
+There are two ways to use NEAR tokens with NEAR Intents:
 
-To deposit NEAR, you must first wrap it:
+### Option 1: Use 1Click or Passive Deposit Service (Recommended)
+
+The easiest way to use NEAR tokens for deposits are through the [1Click Swap API](/integration/distribution-channels/1click-api/overview) or the [Passive Deposit/Withdrawal Service](/integration/market-makers/deposit-withdrawal-service). These services handle wrapping automatically, so you can make deposits using native NEAR tokens.
+
+### Option 2: Wrap and deposit manually
+
+If you're integrating directly with the Verifier contract, you must wrap your NEAR first:
 
 <Steps>
   <Step title="Wrap your NEAR">
