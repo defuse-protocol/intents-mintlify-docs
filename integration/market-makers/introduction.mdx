@@ -5,6 +5,8 @@ description: 'Provide liquidity and earn fees by fulfilling cross-chain swaps'
 icon: 'book-open'
 ---
 
+![NEAR Intents Market Makers](/images/diagrams/market-makers-dark.svg)
+
 Market Makers are the liquidity providers that fulfill user intents on NEAR Intents. They compete to offer the best prices, while [Distribution Channels](/integration/distribution-channels/introduction) handle user-facing applications and intent creation.
 
 ## Prerequisites
@@ -42,26 +44,6 @@ Before you begin, ensure you have:
 
 ## Architecture overview
 
-```
-┌─────────────┐     quote request      ┌─────────────┐
-│    User     │ ───────────────────▶   │  Message    │
-│  Frontend   │                        │    Bus      │
-└─────────────┘   ◀───────────────────  └─────────────┘
-                     quote response           │
-                                              │ WebSocket
-                                              ▼
-                                      ┌─────────────┐
-                                      │   Market    │
-                                      │   Maker     │
-                                      └─────────────┘
-                                              │
-                                              │ signed intent
-                                              ▼
-                                      ┌─────────────┐
-                                      │  Verifier   │
-                                      │  Contract   │
-                                      └─────────────┘
-```
 
 The Message Bus facilitates price discovery by:
 1. Broadcasting quote requests from users to connected market makers
