@@ -186,6 +186,6 @@
     }
   },
   "appearance": {
-    "strict": true
+    "default": "dark"
   }
 }
