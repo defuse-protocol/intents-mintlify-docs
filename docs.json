@@ -173,6 +173,10 @@
   "navbar": {
     "links": [
       {
+        "label": "Explorer",
+        "href": "https://explorer.near-intents.org/"
+      },
+      {
         "label": "Support",
         "href": "https://t.me/near_intents"
       }
