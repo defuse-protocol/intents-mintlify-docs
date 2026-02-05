@@ -12,6 +12,7 @@
     "tabs": [
       {
         "tab": "Home",
+        "icon": "house",
         "groups": [
           {
             "group": "Getting started",
@@ -43,13 +44,9 @@
       {
         "tab": "Token Swaps",
         "icon": "arrows-rotate",
-        "openapi": [
-          "/api-reference/openapi.json",
-          "/api-reference/explorer-openapi.yaml"
-        ],
         "groups": [
           {
-            "group": "Overview",
+            "group": "Token Swaps",
             "pages": [
               "integration/distribution-channels/introduction"
             ]
@@ -57,22 +54,33 @@
           {
             "group": "1Click Swap API",
             "icon": "computer-mouse",
+            "openapi": "/api-reference/openapi.json",
             "pages": [
-              "integration/distribution-channels/1click-api/overview",
+              "integration/distribution-channels/1click-api/about-1click-api",
               "integration/distribution-channels/1click-api/authentication",
               "integration/distribution-channels/1click-api/fee-config",
               {
-                "group": "OneClick",
-                "pages": []
+                "group": "API Endpoints",
+                "icon": "code",
+                "expanded": true,
+                "pages": [
+                  "GET /v0/tokens",
+                  "POST /v0/quote",
+                  "GET /v0/status",
+                  "GET /v0/any-input/withdrawals",
+                  "POST /v0/deposit/submit"
+                ]
               }
             ]
           },
           {
             "group": "Explorer API",
+            "icon": "magnifying-glass",
+            "openapi": "/api-reference/explorer-openapi.yaml",
             "pages": [
               "api-reference/explorer/introduction",
-              "api-reference/explorer/transactions",
-              "api-reference/explorer/transactions-pages"
+              "GET /api/v0/transactions",
+              "GET /api/v0/transactions-pages"
             ]
           }
         ]
@@ -82,10 +90,8 @@
         "icon": "users",
         "groups": [
           {
-            "group": "Overview",
-            "pages": [
-              "integration/market-makers/introduction"
-            ]
+            "group": "Market Makers",
+            "pages": ["integration/market-makers/introduction"]
           },
           {
             "group": "Message Bus",
@@ -98,16 +104,12 @@
           },
           {
             "group": "Services",
-            "pages": [
-              "integration/market-makers/deposit-withdrawal-service"
-            ]
+            "pages": ["integration/market-makers/deposit-withdrawal-service"]
           },
           {
             "group": "Token Bridges",
             "icon": "bridge",
-            "pages": [
-              "integration/bridging/overview"
-            ]
+            "pages": ["integration/bridging/overview"]
           }
         ]
       },
@@ -116,7 +118,7 @@
         "icon": "shield-check",
         "groups": [
           {
-            "group": "Overview",
+            "group": "Verifier Contract",
             "pages": [
               "integration/verifier-contract/introduction",
               "integration/verifier-contract/account-abstraction"
@@ -162,7 +164,7 @@
           "href": "/integration/distribution-channels/1click-api/authentication",
           "icon": "key"
         }
-      ] 
+      ]
     }
   },
   "logo": {
@@ -189,15 +191,15 @@
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
   },
   "footer": {
     "socials": {

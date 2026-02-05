@@ -14,18 +14,26 @@ Token swaps on NEAR Intents are delivered through **distribution channels** — 
 
 The **1Click Swap API** is the easiest way to build a distribution channel. It's a REST API that handles intent creation, market maker coordination, and transaction execution — so you can focus on your user experience instead of protocol complexity.
 
-<Card title="1Click Swap API" icon="bolt" href="/integration/distribution-channels/1click-api/overview">
+<Card title="1Click Swap API" icon="bolt" href="/integration/distribution-channels/1click-api/about-1click-api">
   Get started with the recommended integration path
+</Card>
+
+## Explorer API
+
+The **Explorer API** lets you query transaction history and status for your integration. Use it to track swaps, build dashboards, or provide transaction receipts to your users.
+
+<Card title="Explorer API" icon="magnifying-glass" href="/api-reference/explorer/introduction">
+  Query transaction history and swap status
 </Card>
 
 ## Direct Integration
 
-For advanced use cases requiring non-custodial flows or custom settlement logic, you can integrate directly with the [Verifier Contract](/integration/verifier-contract/introduction). This gives you full control over intent creation and on-chain execution.
+For advanced use cases, you can build low level integrations directly with the [Verifier Contract](/integration/verifier-contract/introduction). This gives you full control over intent creation and on-chain execution.
 
 ## Next Steps
 
 <CardGroup cols={2}>
-  <Card title="1Click API Overview" icon="bolt" href="/integration/distribution-channels/1click-api/overview">
+  <Card title="1Click API Overview" icon="bolt" href="/integration/distribution-channels/1click-api/about-1click-api">
     Learn how the 1Click API works and get started
   </Card>
   <Card title="Get an API Key" icon="key" href="/integration/distribution-channels/1click-api/authentication">
@@ -34,7 +42,7 @@ For advanced use cases requiring non-custodial flows or custom settlement logic,
   <Card title="Fee Configuration" icon="wallet" href="/integration/distribution-channels/1click-api/fee-config">
     Set up fee collection for your integration
   </Card>
-  <Card title="Example Repository" icon="github" href="https://github.com/near-examples/near-intents-examples">
-    Complete TypeScript implementation
+  <Card title="Explorer API" icon="magnifying-glass" href="/api-reference/explorer/introduction">
+    Query transaction history and swap status
   </Card>
 </CardGroup>
