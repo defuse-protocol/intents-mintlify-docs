@@ -69,15 +69,18 @@ Here is an [example transaction](https://nearblocks.io/txns/FBTRk6jRUSW3E1SjBfYb
   </Tab>
   <Tab title="NEAR API JS">
     ```typescript
-    import { JsonRpcProvider, teraToGas } from "near-api-js";
+    import { Account, JsonRpcProvider, teraToGas, KeyPairString } from "near-api-js";
+
+    const accountId = "your-account.near";
+    const privateKey = "ed25519:3D4YudU..." as KeyPairString;
 
     const provider = new JsonRpcProvider({ url: "https://rpc.fastnear.com" });
+    const account = new Account(accountId, provider, privateKey);
 
     await account.callFunction({
       contractId: "intents.near",
       methodName: "add_public_key",
       args: {
-        accountId: "example-account.near"
         public_key: "ed25519:<base58>",
       },
       gas: teraToGas("100"),
@@ -107,29 +110,29 @@ You can also submit a signed intent to add a public key:
 
 ## Authentication flow for frontends
 
-Users' wallets store their private keys and allow users to rotate them. For the Verifier to verify signatures, it needs to know which keys are associated with which "named" accounts. Therefore, `intents.near` maintains a mapping of `account_ids` to their `public_keys` (each account can have multiple public keys registered).
+Wallets store private keys and allow key rotation. For the Verifier to verify signatures, it needs to know which keys are associated with which "named" accounts. Therefore, `intents.near` maintains a mapping of `account_ids` to their `public_keys` (each account can have multiple public keys registered).
 
 ### Step-by-step flow
 
 <Steps>
   <Step title="Connect wallet">
-    The user connects their wallet, establishing a session and providing their account ID or address.
+    Prompt your user to connect their wallet, establishing a session and providing their account ID or address.
   </Step>
 
   <Step title="Check key registration">
-    For Named accounts only: check whether the user's public key is registered with the Verifier contract. If not, register it by calling `add_public_key` on `intents.near`. Implicit accounts skip this step — their account ID is derived directly from their public key.
+    For Named accounts only: check whether the public key is registered with the Verifier contract. If not, register it by calling `add_public_key` on `intents.near`. Implicit accounts skip this step — their account ID is derived directly from their public key.
   </Step>
 
   <Step title="Sign and submit intents">
-    The user's wallet signs the intent payload. The signed intent is published to the Solver Relay, which coordinates with market makers to settle on-chain via `execute_intents`.
+    The wallet signs the intent payload. The signed intent is published to the Solver Relay, which coordinates with market makers to settle on-chain via `execute_intents`.
   </Step>
 </Steps>
 
 ### Key rotation
 
-When a user removes a Full Access Key from their NEAR account, it should also be unregistered on `intents.near` by calling `remove_public_key(public_key)` from the user's NEAR account.
+When a user removes a Full Access Key from their NEAR account, it should also be unregistered on `intents.near` by calling `remove_public_key(public_key)` from that NEAR account.
 
-This can be automated by adding a `FunctionalKey` to the user's account on NEAR and calling it whenever you detect that your user has deleted a key from their NEAR account on-chain.
+You can automate this by adding a `FunctionalKey` to the account on NEAR and calling it whenever you detect that a key has been deleted on-chain.
 
 ## Real transaction examples
 
