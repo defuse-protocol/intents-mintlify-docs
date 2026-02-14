@@ -40,44 +40,6 @@ Before working with directly with the Verifier contract, you should have:
 If you're new to NEAR, start with the [NEAR documentation](https://docs.near.org/) to understand accounts, transactions, and the basics of smart contract interaction.
 </Tip>
 
-## Example use cases
-
-<AccordionGroup>
-  <Accordion title="Simple transfer">
-    Alice, the owner of `alice.near`, wants to transfer a fungible token to `bob.near`.
-
-    1. Alice creates an Intent object of type `Transfer`, specifying `bob.near` as the destination
-    2. Alice [signs the intent](/integration/verifier-contract/signing-intents)
-    3. Alice calls `execute_intents` on the Verifier smart contract
-    4. The contract transfers ownership of the tokens from `alice.near` to `bob.near`
-  </Accordion>
-
-  <Accordion title="Token swap">
-    Alice and Bob agree to swap 1000 USDT for 1000 USDC. Without a mediator, this requires trust. Alice could receive USDC and never send USDT.
-
-    The Verifier solves this:
-
-    1. **Deposit**: Alice and Bob deposit their USDT and USDC to the Verifier contract. They retain full ownership and can withdraw at any time.
-    2. **Create intents**: Alice creates a `TokenDiff` intent expressing she'll give up 1000 USDT if she receives 1000 USDC. Bob creates the opposite intent.
-    3. **Bundle and execute**: Both intents are bundled into a list. Either party calls `execute_intents`.
-    4. **Atomic swap**: The Verifier fulfills both intents atomically. Alice now has 1000 USDC and Bob has 1000 USDT.
-    5. **Withdraw**: Both can withdraw their tokens at any time.
-
-    This is how peer-to-peer trading works on NEAR Intents. The Message Bus (or any third party) can act as the matchmaker that bundles `TokenDiff` intents.
-  </Accordion>
-
-  <Accordion title="Withdrawal">
-    From the previous example, if Alice wants to withdraw her USDC:
-
-    1. Alice creates an Intent of type `FtWithdraw`, specifying the receiving address and amount
-    2. Alice [signs the intent](/integration/verifier-contract/signing-intents)
-    3. Alice calls `execute_intents`
-    4. The Verifier verifies her ownership and sends the tokens to her specified address
-
-    Withdrawals can also be done by directly calling the Verifier smart contract. See [Withdrawals](/integration/verifier-contract/deposits-and-withdrawals/withdrawals) for more details.
-  </Accordion>
-</AccordionGroup>
-
 ## Deployment
 
 The Verifier smart contract is deployed at [`intents.near`](https://nearblocks.io/address/intents.near).
@@ -97,20 +59,6 @@ The contract is open source. You can find it on GitHub:
 <Info>
 The former name of the smart contract is "Defuse". You may still see this name in some places in the codebase. It is planned to be updated in the future.
 </Info>
-
-## Real transaction examples
-
-View these transactions on NEAR mainnet to see the Verifier contract in action:
-
-| Operation | Transaction |
-|-----------|-------------|
-| Add public key | [FBTRk6jR...](https://nearblocks.io/txns/FBTRk6jRUSW3E1SjBfYbA71DhN5xTX1yE2foy98TafrM#execution) |
-| Remove public key | [69XiJcRt...](https://nearblocks.io/txns/69XiJcRtipZ2i8bkHHgCaSAkswd8Lt6VxiJuM8dKq9qn#execution) |
-| Deposit tokens | [DWv4AkrL...](https://nearblocks.io/txns/DWv4AkrLxnbJV6paqSFR3Tt42SdVAtunBbEi2XATdXTW#enhanced) |
-| Deposit + execute intents | [Bn3iC9B1...](https://nearblocks.io/txns/Bn3iC9B1uUJrX59x7cfxngY1E159HspzTCyyDVwx5DMJ) |
-| Deposit + swap + withdraw | [BMFcWFRe...](https://nearblocks.io/txns/BMFcWFReAzbH8okweUio2nNTuVXtMr1hXeaaNR4UhEzS) |
-| Withdraw by transaction | [3E8TDSLq...](https://nearblocks.io/txns/3E8TDSLq2Xn8JZEAdbeX8NGS7Ps6f1EwLeoFxhT7YY3G#enhanced) |
-| Execute intents | [FxpbspXj...](https://nearblocks.io/txns/FxpbspXjRQg3gDii18ibp3w7yvbe7MWaDHQfVqVfq7xN#enhanced) |
 
 ## Next steps
 
