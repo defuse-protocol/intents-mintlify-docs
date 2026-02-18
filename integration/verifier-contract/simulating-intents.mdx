@@ -100,6 +100,10 @@ Calling `simulate_intents` produces:
 Fees are expressed in pips—100 pips equals 0.01%.
 </Info>
 
+<Tip>
+Use `current_salt` from the simulation response when constructing [versioned nonces](https://github.com/near/intents/tree/main/defuse#nonces). A nonce is only valid if its embedded salt matches one of the salts in the contract's registry.
+</Tip>
+
 Simulation outputs may include additional data in future updates. Contact the NEAR Intents team if your application requires more detailed output.
 
 ## Accuracy of simulations
