@@ -4,13 +4,41 @@ description: 'Events emitted by the Verifier smart contract for tracking on-chai
 icon: 'bell'
 ---
 
-In the NEAR blockchain, [events](https://docs.near.org/tutorials/nfts/events) are strings logged as a result of executing a smart contract function. Smart contracts can emit events to alert users to important on-chain actions.
+The Verifier smart contract emits [events](https://github.com/near/NEPs/blob/master/neps/nep-0297.md) to log information about every intent execution and balance change. You can use these events to track on-chain actions, build indexers, and verify intent outcomes.
 
-The Verifier smart contract uses events to emit information about every intent and transaction function call.
+- For intent types that trigger these events, see [Intent Types and Execution](/integration/verifier-contract/intent-types-and-execution).
+- To preview events before execution, see [Simulating Intents](/integration/verifier-contract/simulating-intents).
 
 ## Event structure
 
-Based on [NEP-171](https://docs.near.org/tutorials/nfts/events), NEAR events are prefixed with the string `EVENT_JSON`. The Verifier contract uses strictly JSON objects to maintain easy programmability for detecting events.
+Based on [NEP-297](https://github.com/near/NEPs/blob/master/neps/nep-0297.md), NEAR events are prefixed with the string `EVENT_JSON`. The Verifier contract emits events using the DIP-4 standard, which wraps event data in a JSON object with `standard`, `version`, `event`, and `data` fields.
+
+Here is a `token_diff` event emitted after a successful trade:
+
+```json
+EVENT_JSON:{
+  "standard": "dip4",
+  "version": "0.3.0",
+  "event": "token_diff",
+  "data": [
+    {
+      "account_id": "charlie.near",
+      "intent_hash": "5GpL6PsUQVHFYAk5FWEwBUaEQqcZkc2SjTvPYHgHAnx8",
+      "diff": {
+        "nep141:usdc.near": "-100",
+        "nep141:usdt.near": "100"
+      }
+    }
+  ]
+}
+```
+
+| Field | Description |
+|-------|-------------|
+| `standard` | Always `"dip4"`. |
+| `version` | DIP-4 version (currently `"0.3.0"`). |
+| `event` | Event name (e.g., `"token_diff"`, `"intents_executed"`). |
+| `data` | Array of event-specific payloads. |
 
 ## Intent events
 
@@ -18,16 +46,16 @@ These events are directly related to [submitted intents](/integration/verifier-c
 
 | Event | Description |
 |-------|-------------|
-| `PublicKeyAdded` | Emitted when a public key is added to an account with an intent |
-| `PublicKeyRemoved` | Emitted when a public key is removed from an account with an intent |
-| `Transfer` | Emitted when a transfer between two accounts happens with an intent |
-| `TokenDiff` | Emitted when a `TokenDiff` intent executes successfully |
-| `IntentsExecuted` | Emitted after successfully executing the listed intents |
-| `FtWithdraw` | Emitted when a fungible token withdraw intent is made |
-| `NftWithdraw` | Emitted when an NFT withdraw intent is made |
-| `MtWithdraw` | Emitted when a multi-token withdraw intent is made |
-| `NativeWithdraw` | Emitted when a native NEAR withdraw intent is made |
-| `StorageDeposit` | Emitted when a storage deposit intent is submitted |
+| `public_key_added` | Emitted when a public key is added to an account. |
+| `public_key_removed` | Emitted when a public key is removed from an account. |
+| `transfer` | Emitted when a transfer between two accounts executes. |
+| `token_diff` | Emitted when a `token_diff` intent executes successfully. |
+| `intents_executed` | Emitted after successfully executing the listed intents. |
+| `ft_withdraw` | Emitted when a fungible token withdrawal intent is made. |
+| `nft_withdraw` | Emitted when an NFT withdrawal intent is made. |
+| `mt_withdraw` | Emitted when a multi-token withdrawal intent is made. |
+| `native_withdraw` | Emitted when a native NEAR withdrawal intent is made. |
+| `storage_deposit` | Emitted when a storage deposit intent is submitted. |
 
 <Info>
 For withdrawal events, it is often difficult to emit only on success because the outcome depends on cross-contract calls.
@@ -39,9 +67,9 @@ Multi Token events indicate changes in the internal balances of the Verifier con
 
 | Event | Description |
 |-------|-------------|
-| [MtMintEvent](https://near.github.io/intents/defuse_nep245/struct.MtMintEvent.html) | Emitted when the balance of a given account increases (due to deposits) |
-| [MtBurnEvent](https://near.github.io/intents/defuse_nep245/struct.MtBurnEvent.html) | Emitted when the balance of a given account decreases (due to withdrawals) |
-| [MtTransferEvent](https://near.github.io/intents/defuse_nep245/struct.MtTransferEvent.html) | Emitted when tokens move between accounts (after executing intents like `TokenDiff`) |
+| [`mt_mint`](https://near.github.io/intents/defuse_nep245/struct.MtMintEvent.html) | Emitted when the balance of a given account increases (due to deposits). |
+| [`mt_burn`](https://near.github.io/intents/defuse_nep245/struct.MtBurnEvent.html) | Emitted when the balance of a given account decreases (due to withdrawals). |
+| [`mt_transfer`](https://near.github.io/intents/defuse_nep245/struct.MtTransferEvent.html) | Emitted when tokens move between accounts (after executing intents like `token_diff`). |
 
 ### Why "mint" and "burn"?
 

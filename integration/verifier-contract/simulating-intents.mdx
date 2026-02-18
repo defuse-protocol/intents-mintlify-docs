@@ -4,9 +4,10 @@ description: 'Test intents without modifying blockchain state using the simulate
 icon: 'flask'
 ---
 
-The `execute_intents` function modifies the Verifier contract's state. However, the Verifier also offers the ability to simulate intents using [the function](https://near.github.io/intents/defuse/intents/trait.Intents.html#tymethod.simulate_intents) `simulate_intents`.
+The [`simulate_intents`](https://near.github.io/intents/defuse/intents/trait.Intents.html#tymethod.simulate_intents) function runs intent code **without** modifying the Verifier contract's state. It accepts the same [`MultiPayload`](https://near.github.io/intents/defuse_core/payload/multi/enum.MultiPayload.html) input as `execute_intents`.
 
-Simulation runs the intent code **without** modifying the Verifier contract's state.
+- For intent structure and types, see [Intent Types and Execution](/integration/verifier-contract/intent-types-and-execution).
+- For signing intents before simulation, see [Signing Intents](/integration/verifier-contract/signing-intents).
 
 ## When to use simulations
 
@@ -86,14 +87,22 @@ Calling `simulate_intents` produces:
 
 | Field | Description |
 |-------|-------------|
-| `intents_executed` | All intent events collected during simulation, containing signer, [nonce](https://github.com/near/intents/tree/main/defuse#nonces), and intent hash |
-| `logs` | All Defuse events that would be emitted during intent execution |
-| `min_deadline` | Minimum deadline among all intents |
-| `state` | Current state configuration containing fee and [salt](https://github.com/near/intents/tree/main/defuse#salt) |
+| `intents_executed` | Array of intent events collected during simulation. |
+| `intents_executed[].intent_hash` | Unique hash identifying the intent. |
+| `intents_executed[].account_id` | NEAR account that signed the intent. |
+| `intents_executed[].nonce` | Base64-encoded [nonce](https://github.com/near/intents/tree/main/defuse#nonces) used by the intent. |
+| `logs` | Array of DIP-4 event JSON strings that would be emitted during execution. |
+| `min_deadline` | Earliest deadline among all intents in the batch. |
+| `state.fee` | Current fee in pips. |
+| `state.current_salt` | Current 4-byte [salt](https://github.com/near/intents/tree/main/defuse#salt) value (hex-encoded). |
 
 <Info>
 Fees are expressed in pips—100 pips equals 0.01%.
 </Info>
+
+<Tip>
+Use `current_salt` from the simulation response when constructing [versioned nonces](https://github.com/near/intents/tree/main/defuse#nonces). A nonce is only valid if its embedded salt matches one of the salts in the contract's registry.
+</Tip>
 
 Simulation outputs may include additional data in future updates. Contact the NEAR Intents team if your application requires more detailed output.
 
