@@ -6,6 +6,12 @@ icon: 'list-check'
 
 An intent is a desired action on your account in the Verifier smart contract, performed by submitting a transaction to the NEAR blockchain. The Verifier allows submitting a list of actions using [the function](https://near.github.io/intents/defuse/intents/trait.Intents.html#tymethod.execute_intents) `execute_intents`.
 
+This page covers how intents are structured, wrapped into signed payloads, and the [available intent types](#available-intent-types) you can submit. 
+
+- For cryptographic signing details, see [Signing Intents](/integration/verifier-contract/signing-intents). 
+
+- To test intents before submitting, see [Simulating Intents](/integration/verifier-contract/simulating-intents).
+
 ## Ordering and atomicity
 
 Multiple intents can be submitted to `execute_intents` in a list, where they execute in the order provided.
@@ -385,3 +391,20 @@ The `message` field contains the intent JSON above, serialized as a single line 
 </Accordion>
 
 As described in the [Introduction](/integration/verifier-contract/introduction), there are many ways to bundle these intents together for submission—the Message Bus, third parties, or any off-chain communication channel.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Signing Intents" icon="signature" href="/integration/verifier-contract/signing-intents">
+    Learn how to sign intents for different wallet types
+  </Card>
+  <Card title="Simulating Intents" icon="flask" href="/integration/verifier-contract/simulating-intents">
+    Test intents before submitting them on-chain
+  </Card>
+  <Card title="Deposits & Withdrawals" icon="arrow-right-arrow-left" href="/integration/verifier-contract/deposits-and-withdrawals/deposits">
+    Deposit and withdraw tokens from the Verifier
+  </Card>
+  <Card title="Events" icon="bell" href="/integration/verifier-contract/events">
+    Monitor intent execution via on-chain events
+  </Card>
+</CardGroup>
