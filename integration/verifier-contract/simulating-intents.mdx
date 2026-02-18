@@ -86,10 +86,14 @@ Calling `simulate_intents` produces:
 
 | Field | Description |
 |-------|-------------|
-| `intents_executed` | All intent events collected during simulation, containing signer, [nonce](https://github.com/near/intents/tree/main/defuse#nonces), and intent hash |
-| `logs` | All Defuse events that would be emitted during intent execution |
-| `min_deadline` | Minimum deadline among all intents |
-| `state` | Current state configuration containing fee and [salt](https://github.com/near/intents/tree/main/defuse#salt) |
+| `intents_executed` | Array of intent events collected during simulation. |
+| `intents_executed[].intent_hash` | Unique hash identifying the intent. |
+| `intents_executed[].account_id` | NEAR account that signed the intent. |
+| `intents_executed[].nonce` | Base64-encoded [nonce](https://github.com/near/intents/tree/main/defuse#nonces) used by the intent. |
+| `logs` | Array of DIP-4 event JSON strings that would be emitted during execution. |
+| `min_deadline` | Earliest deadline among all intents in the batch. |
+| `state.fee` | Current fee in pips. |
+| `state.current_salt` | Current 4-byte [salt](https://github.com/near/intents/tree/main/defuse#salt) value (hex-encoded). |
 
 <Info>
 Fees are expressed in pips—100 pips equals 0.01%.
