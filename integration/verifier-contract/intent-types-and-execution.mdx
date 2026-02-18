@@ -119,6 +119,10 @@ Implicit account IDs have their corresponding public keys added by default. If a
 
 Public keys can also be added [via transactions](/integration/verifier-contract/account-abstraction).
 
+| Parameter | Description |
+|-----------|-------------|
+| `public_key` | The public key to add to the account (e.g., `ed25519:...`). |
+
 ```json
 {
   "intent": "add_public_key",
@@ -148,6 +152,10 @@ The `message` field contains the intent JSON above, serialized as a single line 
 ### remove_public_key
 
 Removes a public key from an account. Can also be done [via transactions](/integration/verifier-contract/account-abstraction).
+
+| Parameter | Description |
+|-----------|-------------|
+| `public_key` | The public key to remove from the account. |
 
 ```json
 {
@@ -180,6 +188,12 @@ The `message` field contains the intent JSON above, serialized as a single line 
 Transfers tokens from the signer to a specified account within the Verifier contract.
 
 Transfers can also be done [via direct blockchain transactions](https://near.github.io/intents/defuse_nep245/trait.MultiTokenCore.html#tymethod.mt_transfer).
+
+| Parameter | Description |
+|-----------|-------------|
+| `receiver_id` | The account to receive the tokens. |
+| `tokens` | Map of token IDs to amounts in [Multi Token format](/integration/verifier-contract/deposits-and-withdrawals/balances). |
+| `memo` | Optional memo for the transfer. |
 
 ```json
 {
@@ -225,6 +239,15 @@ These intents move tokens from the Verifier contract to an arbitrary address:
 
 See [Withdrawals](/integration/verifier-contract/deposits-and-withdrawals/withdrawals) for details.
 
+| Parameter | Description |
+|-----------|-------------|
+| `token` | The token contract to withdraw (e.g., `usdc.near`). No prefix for this field. |
+| `receiver_id` | The NEAR account that will receive the withdrawn tokens. |
+| `amount` | The amount in the token's smallest unit. |
+| `memo` | Optional memo for the withdrawal. |
+| `msg` | Optional message to pass to `ft_transfer_call`. If omitted, `ft_transfer` is used instead. See [Withdrawals](/integration/verifier-contract/deposits-and-withdrawals/withdrawals) for refund behavior. |
+| `storage_deposit` | Optional wNEAR amount to pay for storage deposit on the token contract for the receiver. Will not be refunded on failure. |
+
 **Example:** Withdraw from Alice's account to Bob's account. On success, the tokens will be in the `usdc.near` contract under Bob's account—they have exited the Verifier:
 
 ```json
@@ -259,6 +282,12 @@ The `message` field contains the intent JSON above, serialized as a single line 
 
 Makes an [NEP-145](https://nomicon.io/Standards/StorageManagement#nep-145) `storage_deposit` call for an `account_id` on a `contract_id`. The `amount` is subtracted from the user's NEP-141 wNEAR balance and will not be refunded.
 
+| Parameter | Description |
+|-----------|-------------|
+| `contract_id` | The contract to make the storage deposit on (e.g., `usdc.near`). |
+| `account_id` | The account to deposit storage for. |
+| `amount` | The wNEAR amount in yoctoNEAR. Subtracted from the signer's wNEAR balance and will not be refunded. |
+
 **Example:** Pay for storage deposit in the `usdc.near` contract. The NEAR token specified will be taken from `alice.near`'s account and paid to `bob.near` in the `usdc.near` contract:
 
 ```json
@@ -291,7 +320,13 @@ The `message` field contains the intent JSON above, serialized as a single line 
 
 ### token_diff
 
-The user declares willingness to have a set of changes applied to their tokens. For example, a trade of 100 token A for 200 token B can be represented as `{"A": -100, "B": 200}`.
+The user declares willingness to have a set of changes applied to their tokens. For example, a trade of 100 token A for 200 token B can be represented as `{"A": -100, "B": 200}`. The Verifier resolves matching diffs into transfers between parties.
+
+| Parameter | Description |
+|-----------|-------------|
+| `diff` | Map of token IDs to signed amount strings. Negative values indicate tokens given, positive values indicate tokens received. |
+| `memo` | Optional memo for the trade. |
+| `referral` | Optional account ID for referral tracking. |
 
 **Example:** Two users trading USDC for USDT. Alice declares she'll give up 10 USDC to get 10 USDT; Bob declares the opposite. These intents can be matched through the Message Bus or any off-chain channel, then submitted together:
 
