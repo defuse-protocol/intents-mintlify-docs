@@ -81,7 +81,7 @@ The nonce is a 256-bit (32-byte) value encoded as base64. It must be unique per 
 
 **Structure:** `[4-byte salt][28-byte unique data]`
 
-- **Salt (first 4 bytes):** Must match the current contract salt (retrieve via `simulate_intents`)
+- **Salt (first 4 bytes):** Must match the current contract salt (retrieve via [`simulate_intents`](/integration/verifier-contract/simulating-intents))
 - **Unique data (remaining 28 bytes):** Can be random or sequential, as long as it's never reused for the same account
 
 <Info>
@@ -90,7 +90,7 @@ The salt rotates periodically. Always fetch the current salt before constructing
 
 ## Signed intent format
 
-To create a valid, signed intent for the `execute_intents` function, wrap the payload in a message string. Note that the message is the same JSON serialized as a one-liner with escaped quotes:
+To create a valid, signed intent for the `execute_intents` function, wrap the payload in a message string and sign it. See [Signing Intents](/integration/verifier-contract/signing-intents) for supported signature types (NEP-413, ERC-191, WebAuthn, and more). Note that the message is the same JSON serialized as a one-liner with escaped quotes:
 
 ```json
 {
