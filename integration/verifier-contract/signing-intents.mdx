@@ -4,7 +4,7 @@ description: 'How to sign intents for different wallet types and signing standar
 icon: 'signature'
 ---
 
-After creating intents, they must be signed before submission to the Verifier contract via the `execute_intents` function. The Verifier supports [multiple signature standards](#signature-types) to enable signing from NEAR, Ethereum, Solana, TON, and passkey-based wallets.
+After creating intents, they must be signed before submission to the Verifier contract via the `execute_intents` function. The Verifier supports [multiple signature standards](#signature-types) to enable signing from NEAR, Ethereum, TRON, Solana, Stellar, TON, and passkey-based wallets.
 
 - For intents structure before signing, see [Intent Types and Execution](/integration/verifier-contract/intent-types-and-execution).
 - For key management, see [Account Abstraction](/integration/verifier-contract/account-abstraction).
@@ -29,24 +29,7 @@ Every public key registered to an account can sign intents on its behalf. See [A
 
 ## Signature types
 
-Different wallets use different signing standards. To allow users to sign with their existing wallet, the Verifier supports [multiple verification methods](https://near.github.io/intents/defuse_core/payload/multi/enum.MultiPayload.html) — each corresponding to a specific wallet ecosystem (e.g., ERC-191 for MetaMask, Raw Ed25519 for Phantom).
-
-A signed [Transfer](https://near.github.io/intents/defuse_core/intents/tokens/struct.Transfer.html) intent ready for submission looks like this:
-
-```json
-{
-  "standard": "nep413",
-  "payload": {
-    "recipient": "intents.near",
-    "nonce": "Vij2xgAlKBKzgNPJFViEQRgYyS7p2NEiYTTY4XmT8go=",
-    "message": "{\"deadline\":\"2025-05-21T10:34:04.254392Z\",\"intents\":[{\"intent\":\"transfer\",\"receiver_id\":\"bob.near\",\"tokens\":{\"nep141:usdc.near\":\"10\"}}],\"signer_id\":\"alice.near\"}"
-  },
-  "public_key": "ed25519:C3jXhkGhEx88Gj7XKtUziJKXEBMRaJ67bWFkxJikVxZ2",
-  "signature": "ed25519:2ns3eCikZFxFA6e9ApunuDG4XwJUPrB8q82fYViBKjheqiDYcCmLN9RnB9NhoEvCdNoS3L3qYD9FAnKd7UkTnuij"
-}
-```
-
-This object conforms to the [MultiPayload](https://near.github.io/intents/defuse_core/payload/multi/enum.MultiPayload.html) enum.
+Different wallets use different signing standards. To allow users to sign with their existing wallet, the Verifier supports [multiple verification methods](https://near.github.io/intents/defuse_core/payload/multi/enum.MultiPayload.html) — each corresponding to a specific wallet ecosystem (e.g., ERC-191 for MetaMask, Raw Ed25519 for Phantom). Each signed intent conforms to the [MultiPayload](https://near.github.io/intents/defuse_core/payload/multi/enum.MultiPayload.html) enum.
 
 ### NEP-413
 
@@ -60,6 +43,19 @@ The [NEP-413 standard](https://github.com/near/NEPs/blob/master/neps/nep-0413.md
 | `payload.message` | Serialized JSON payload string containing `signer_id`, `deadline`, and `intents`. |
 | `public_key` | Signer's public key. Encoded as key type prefix + base58 (e.g., `ed25519:...`). |
 | `signature` | Cryptographic signature. Encoded as key type prefix + base58. |
+
+```json
+{
+  "standard": "nep413",
+  "payload": {
+    "recipient": "intents.near",
+    "nonce": "Vij2xgAlKBKzgNPJFViEQRgYyS7p2NEiYTTY4XmT8go=",
+    "message": "{\"deadline\":\"2025-05-21T10:34:04.254392Z\",\"intents\":[{\"intent\":\"transfer\",\"receiver_id\":\"bob.near\",\"tokens\":{\"nep141:usdc.near\":\"10\"}}],\"signer_id\":\"alice.near\"}"
+  },
+  "public_key": "ed25519:C3jXhkGhEx88Gj7XKtUziJKXEBMRaJ67bWFkxJikVxZ2",
+  "signature": "ed25519:2ns3eCikZFxFA6e9ApunuDG4XwJUPrB8q82fYViBKjheqiDYcCmLN9RnB9NhoEvCdNoS3L3qYD9FAnKd7UkTnuij"
+}
+```
 
 ### ERC-191
 
@@ -75,6 +71,10 @@ Compliant with the [ERC-191 standard](https://eips.ethereum.org/EIPS/eip-191) fo
 There is no `public_key` field because it can be recovered from the secp256k1 signature and data.
 </Info>
 
+<Warning>
+Ethereum clients shift the recovery byte (`v`) based on chain ID. The Verifier contract expects `v ∈ {0, 1}`, so clients must normalize the recovery byte before submission.
+</Warning>
+
 ```json
 {
   "standard": "erc191",
@@ -82,6 +82,20 @@ There is no `public_key` field because it can be recovered from the secp256k1 si
   "signature": "secp256k1:BoR53NKKJ2GfP8bETk427Xav8VMpUcZovLzXeq2EsUD7NnPH2sSmxWFEkDUrguJHHkiu3GwEQxxMo2Rm2ZTDHFygU"
 }
 ```
+
+### TIP-191
+
+Compliant with [TIP-191](https://github.com/tronprotocol/tips/blob/master/tip-191.md), TRON's off-chain message signing standard. TIP-191 is fully compatible with ERC-191.
+
+| Field | Description |
+|-------|-------------|
+| `standard` | `"tip191"`. |
+| `payload` | Serialized JSON payload string. The `signer_id` is the TRON address. |
+| `signature` | Secp256k1 signature. Encoded as key type prefix + base58 (e.g., `secp256k1:...`). |
+
+<Info>
+Like ERC-191, there is no `public_key` field because it can be recovered from the secp256k1 signature and data. The same [recovery byte normalization](#erc-191) applies.
+</Info>
 
 ### Raw Ed25519
 
@@ -154,6 +168,17 @@ Follows the [standard for data signing](https://docs.tonconsole.com/academy/sign
   "signature": "ed25519:5cwYdTNeGy1mApo9RNor9hSXvcG6GbvVm6di6kuf4frnARtVWRpJoPtvFKHMbt7uDGDtgFfn6bPDFGPK5jamqBwC"
 }
 ```
+
+### SEP-53
+
+Compliant with [SEP-53](https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0053.md), Stellar's standard for signing arbitrary messages using Stellar key pairs.
+
+| Field | Description |
+|-------|-------------|
+| `standard` | `"sep53"`. |
+| `payload` | Serialized JSON payload string. |
+| `public_key` | Signer's public key. Encoded as key type prefix + base58 (e.g., `ed25519:...`). |
+| `signature` | Ed25519 signature. Encoded as key type prefix + base58. |
 
 ## Adding more signature types
 
