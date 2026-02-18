@@ -10,7 +10,34 @@ The Verifier smart contract uses events to emit information about every intent a
 
 ## Event structure
 
-Based on [NEP-171](https://docs.near.org/tutorials/nfts/events), NEAR events are prefixed with the string `EVENT_JSON`. The Verifier contract uses strictly JSON objects to maintain easy programmability for detecting events.
+Based on [NEP-297](https://github.com/near/NEPs/blob/master/neps/nep-0297.md), NEAR events are prefixed with the string `EVENT_JSON`. The Verifier contract emits events using the DIP-4 standard, which wraps event data in a JSON object with `standard`, `version`, `event`, and `data` fields.
+
+Here is a `TokenDiff` event emitted after a successful trade:
+
+```
+EVENT_JSON:{
+  "standard": "dip4",
+  "version": "0.3.0",
+  "event": "token_diff",
+  "data": [
+    {
+      "account_id": "charlie.near",
+      "intent_hash": "5GpL6PsUQVHFYAk5FWEwBUaEQqcZkc2SjTvPYHgHAnx8",
+      "diff": {
+        "nep141:usdc.near": "-100",
+        "nep141:usdt.near": "100"
+      }
+    }
+  ]
+}
+```
+
+| Field | Description |
+|-------|-------------|
+| `standard` | Always `"dip4"`. |
+| `version` | DIP-4 version (currently `"0.3.0"`). |
+| `event` | Event name (e.g., `"token_diff"`, `"intents_executed"`). |
+| `data` | Array of event-specific payloads. |
 
 ## Intent events
 
