@@ -4,7 +4,10 @@ description: 'How to sign intents for different wallet types and signing standar
 icon: 'signature'
 ---
 
-After creating intents, they must be signed before submission to the Verifier contract via the `execute_intents` function.
+After creating intents, they must be signed before submission to the Verifier contract via the `execute_intents` function. The Verifier supports [multiple signature standards](#signature-types) to enable signing from NEAR, Ethereum, Solana, TON, and passkey-based wallets.
+
+- For intents structure before signing, see [Intent Types and Execution](/integration/verifier-contract/intent-types-and-execution).
+- For key management, see [Account Abstraction](/integration/verifier-contract/account-abstraction).
 
 <Warning>
 **Encoding Requirements for the Verifier Contract**
