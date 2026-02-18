@@ -62,14 +62,28 @@ This object conforms to the [MultiPayload](https://near.github.io/intents/defuse
 
 The [NEP-413 standard](https://github.com/near/NEPs/blob/master/neps/nep-0413.md) is an off-chain message signing standard recognized by NEAR wallets.
 
-**Encoding:**
-- `nonce`: base64
-- `public_key`: prefixed with key type, then base58
-- `signature`: prefixed with key type, then base58
+| Field | Description |
+|-------|-------------|
+| `standard` | `"nep413"`. |
+| `payload.recipient` | Contract address (e.g., `intents.near`). Prevents replay on other contracts. |
+| `payload.nonce` | Base64-encoded 256-bit nonce. |
+| `payload.message` | Serialized JSON payload string containing `signer_id`, `deadline`, and `intents`. |
+| `public_key` | Signer's public key. Encoded as key type prefix + base58 (e.g., `ed25519:...`). |
+| `signature` | Cryptographic signature. Encoded as key type prefix + base58. |
 
 ### ERC-191
 
 Compliant with the [ERC-191 standard](https://eips.ethereum.org/EIPS/eip-191) for off-chain message signing (Ethereum wallets like MetaMask).
+
+| Field | Description |
+|-------|-------------|
+| `standard` | `"erc191"`. |
+| `payload` | Serialized JSON payload string. The `signer_id` is the Ethereum address. |
+| `signature` | Secp256k1 signature. Encoded as key type prefix + base58 (e.g., `secp256k1:...`). |
+
+<Info>
+There is no `public_key` field because it can be recovered from the secp256k1 signature and data.
+</Info>
 
 ```json
 {
@@ -79,16 +93,16 @@ Compliant with the [ERC-191 standard](https://eips.ethereum.org/EIPS/eip-191) fo
 }
 ```
 
-**Encoding:**
-- `signature`: prefixed with key type, then base58
-
-<Info>
-There is no public key field because it can be recovered from the signature and data.
-</Info>
-
 ### Raw Ed25519
 
 Used by [Phantom wallet for Solana off-chain message signing](https://docs.phantom.com/solana/signing-a-message).
+
+| Field | Description |
+|-------|-------------|
+| `standard` | `"raw_ed25519"`. |
+| `payload` | Serialized JSON payload string. Note: `deadline` uses a Unix `timestamp` instead of ISO 8601. |
+| `public_key` | Signer's public key. Encoded as key type prefix + base58. |
+| `signature` | Ed25519 signature. Encoded as key type prefix + base58. |
 
 ```json
 {
@@ -99,13 +113,18 @@ Used by [Phantom wallet for Solana off-chain message signing](https://docs.phant
 }
 ```
 
-**Encoding:**
-- `public_key`: prefixed with key type, then base58
-- `signature`: prefixed with key type, then base58
-
 ### WebAuthn (Passkey)
 
-For use with [passkeys](https://en.wikipedia.org/wiki/WebAuthn) and the [Web Authentication standard](https://w3c.github.io/webauthn/).
+For use with [passkeys](https://en.wikipedia.org/wiki/WebAuthn) and the [Web Authentication standard](https://w3c.github.io/webauthn/). The [signature](https://near.github.io/intents/defuse_webauthn/enum.Signature.html) can use either [Ed25519 or P256 (secp256r1)](https://www.iana.org/assignments/cose/cose.xhtml#algorithms).
+
+| Field | Description |
+|-------|-------------|
+| `standard` | `"webauthn"`. |
+| `payload` | Serialized JSON payload string. |
+| `public_key` | Signer's public key. Encoded as key type prefix (`p256` or `ed25519`) + base58. |
+| `signature` | Cryptographic signature. Encoded as key type prefix (`p256` or `ed25519`) + base58. |
+| `client_data_json` | WebAuthn client data JSON. Contains `type`, `challenge` (base64 URL-safe), and `origin`. |
+| `authenticator_data` | Authenticator assertion data. Encoded as base64, URL-safe. |
 
 ```json
 {
@@ -118,17 +137,19 @@ For use with [passkeys](https://en.wikipedia.org/wiki/WebAuthn) and the [Web Aut
 }
 ```
 
-The [signature](https://near.github.io/intents/defuse_webauthn/enum.Signature.html) can use either [Ed25519 or P256 (secp256r1)](https://www.iana.org/assignments/cose/cose.xhtml#algorithms).
-
-**Encoding:**
-- `authenticator_data`: base64, URL-safe
-- `challenge`: base64, URL-safe
-- `signature`: prefixed with key type (`p256` or `ed25519`), then base58
-- `public_key`: prefixed with key type, then base58
-
 ### TonConnect
 
 Follows the [standard for data signing](https://docs.tonconsole.com/academy/sign-data) on TON.
+
+| Field | Description |
+|-------|-------------|
+| `address` | TON wallet address. |
+| `domain` | Domain associated with the signing request. |
+| `timestamp` | ISO 8601 timestamp of the signing request. |
+| `payload.type` | `"text"`. |
+| `payload.text` | Serialized JSON payload string containing `signer_id`, `deadline`, and `intents`. |
+| `public_key` | Signer's public key. Encoded as key type prefix + base58. |
+| `signature` | Ed25519 signature. Encoded as key type prefix + base58. |
 
 ```json
 {
@@ -143,10 +164,6 @@ Follows the [standard for data signing](https://docs.tonconsole.com/academy/sign
   "signature": "ed25519:5cwYdTNeGy1mApo9RNor9hSXvcG6GbvVm6di6kuf4frnARtVWRpJoPtvFKHMbt7uDGDtgFfn6bPDFGPK5jamqBwC"
 }
 ```
-
-**Encoding:**
-- `public_key`: prefixed with key type, then base58
-- `signature`: prefixed with key type, then base58
 
 ## Adding more signature types
 
