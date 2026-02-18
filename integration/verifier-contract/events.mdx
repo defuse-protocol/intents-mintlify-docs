@@ -4,9 +4,10 @@ description: 'Events emitted by the Verifier smart contract for tracking on-chai
 icon: 'bell'
 ---
 
-In the NEAR blockchain, [events](https://docs.near.org/tutorials/nfts/events) are strings logged as a result of executing a smart contract function. Smart contracts can emit events to alert users to important on-chain actions.
+The Verifier smart contract emits [events](https://github.com/near/NEPs/blob/master/neps/nep-0297.md) to log information about every intent execution and balance change. You can use these events to track on-chain actions, build indexers, and verify intent outcomes.
 
-The Verifier smart contract uses events to emit information about every intent and transaction function call.
+- For intent types that trigger these events, see [Intent Types and Execution](/integration/verifier-contract/intent-types-and-execution).
+- To preview events before execution, see [Simulating Intents](/integration/verifier-contract/simulating-intents).
 
 ## Event structure
 
