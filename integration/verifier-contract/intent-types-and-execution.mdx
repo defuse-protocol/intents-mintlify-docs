@@ -17,7 +17,7 @@ This page covers how intents are structured, wrapped into signed payloads, and t
 Multiple intents can be submitted to `execute_intents` in a list, where they execute in the order provided.
 
 <Warning>
-**Important:** Because NEAR is an asynchronous and sharded blockchain, intents submitted in sequence does not guarantee they will *complete* in that sequence. While individual intents execute in order, there is no guarantee that [cross-contract calls](https://docs.near.org/smart-contracts/anatomy/crosscontract) originating from the Verifier will finish in order.
+**Important:** Because NEAR is an asynchronous and sharded blockchain, intents submitted in sequence do not guarantee they will *complete* in that sequence. While individual intents execute in order, there is no guarantee that [cross-contract calls](https://docs.near.org/smart-contracts/anatomy/crosscontract) originating from the Verifier will finish in order.
 </Warning>
 
 **Example of potential ordering issues:**
@@ -29,7 +29,7 @@ The `usdc.near` contract requires a storage deposit before tokens can be deposit
 
 ## Intent structure
 
-Intents are submitted as JSON objects in a payload. Here's an example [Transfer](https://near.github.io/intents/defuse_core/intents/tokens/struct.Transfer.html) intent for USDC tokens from Alice to Bob:
+Intents are submitted as JSON objects in a payload. Here's an example [Transfer](https://near.github.io/intents/defuse_core/intents/tokens/struct.Transfer.html) intent for wNEAR tokens from Alice to Bob:
 
 ```json
 {
@@ -51,11 +51,11 @@ The intent is wrapped in a payload with these required fields:
 
 | Field | Description |
 |-------|-------------|
-| `signer_id` | Signer account ID |
-| `verifying_contract` | Contract address receiving the intents |
-| `deadline` | Timestamp in ISO 8601 format |
-| `nonce` | 256-bit unique value (see below) |
-| `intents` | Array of intents to execute |
+| `signer_id` | Signer account ID. |
+| `verifying_contract` | Contract address receiving the intents. |
+| `deadline` | Timestamp in ISO 8601 format. |
+| `nonce` | 256-bit unique value (see below). |
+| `intents` | Array of intents to execute. |
 
 ```json
 {
@@ -105,7 +105,7 @@ To create a valid, signed intent for the `execute_intents` function, wrap the pa
 }
 ```
 
-The `recipient` field prevents replay attacks on other copies of the Verifier. See [Signing Intents](/integration/verifier-contract/signing-intents) for cryptographic details.
+The `recipient` field prevents replay attacks on other copies of the Verifier.
 
 ## Available intent types
 
@@ -230,10 +230,6 @@ The `message` field contains the intent JSON above, serialized as a single line 
 ```
 </Accordion>
 
-<Info>
-Token IDs are specified in [Multi Token format](/integration/verifier-contract/deposits-and-withdrawals/balances).
-</Info>
-
 ### Withdrawal intents
 
 These intents move tokens from the Verifier contract to an arbitrary address:
@@ -327,6 +323,10 @@ The `message` field contains the intent JSON above, serialized as a single line 
 ### token_diff
 
 The user declares willingness to have a set of changes applied to their tokens. For example, a trade of 100 token A for 200 token B can be represented as `{"A": -100, "B": 200}`. The Verifier resolves matching diffs into transfers between parties.
+
+<Warning>
+When `token_diff` intents are submitted together in a batch, the total diffs across all intents must sum to zero for each token. If the amounts don't balance, the entire batch will fail. For example, if Alice gives 10 USDC, another intent in the batch must receive exactly 10 USDC.
+</Warning>
 
 | Parameter | Description |
 |-----------|-------------|
