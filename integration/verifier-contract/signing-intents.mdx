@@ -23,23 +23,13 @@ After creating intents, they must be signed before submission to the Verifier co
 Signatures must be in raw concatenated byte format, not DER-encoded.
 </Warning>
 
-## Account abstraction
-
-As discussed in [Account Abstraction](/integration/verifier-contract/account-abstraction), accounts in the Verifier contract are identified by their NEAR account (whether implicit or named like `alice.near`). Every account can add an arbitrary number of public keys. Every public key in a user's account can produce signatures that authorize intents for that user. Proper key management is essential.
-
-## Signing philosophy
-
-Digital signature algorithms vary significantly. Key differences include:
-
-- **Key generation:** Public/private key generation mechanisms (RSA vs elliptic curves)
-- **Curve types:** NIST curves (secp256k1 from Bitcoin/Ethereum) or Montgomery curves (Ed25519)
-- **Message construction:** How payloads are constructed for verification with the public key
-
-To make integration with different wallets and services as easy as possible, NEAR Intents supports [multiple verification methods](https://near.github.io/intents/defuse_core/payload/multi/enum.MultiPayload.html). Each signature type corresponds to a wallet or service capable of verifying it.
-
-For example, ERC-191 exists because Ethereum wallets like MetaMask support the [ERC-191 standard](https://eips.ethereum.org/EIPS/eip-191) for off-chain data signing.
+<Info>
+Every public key registered to an account can sign intents on its behalf. See [Account Abstraction](/integration/verifier-contract/account-abstraction) for key management details.
+</Info>
 
 ## Signature types
+
+Different wallets use different signing standards. To allow users to sign with their existing wallet, the Verifier supports [multiple verification methods](https://near.github.io/intents/defuse_core/payload/multi/enum.MultiPayload.html) — each corresponding to a specific wallet ecosystem (e.g., ERC-191 for MetaMask, Raw Ed25519 for Phantom).
 
 A signed [Transfer](https://near.github.io/intents/defuse_core/intents/tokens/struct.Transfer.html) intent ready for submission looks like this:
 
