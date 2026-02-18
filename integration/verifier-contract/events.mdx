@@ -46,16 +46,16 @@ These events are directly related to [submitted intents](/integration/verifier-c
 
 | Event | Description |
 |-------|-------------|
-| `PublicKeyAdded` | Emitted when a public key is added to an account with an intent |
-| `PublicKeyRemoved` | Emitted when a public key is removed from an account with an intent |
-| `Transfer` | Emitted when a transfer between two accounts happens with an intent |
-| `TokenDiff` | Emitted when a `TokenDiff` intent executes successfully |
-| `IntentsExecuted` | Emitted after successfully executing the listed intents |
-| `FtWithdraw` | Emitted when a fungible token withdraw intent is made |
-| `NftWithdraw` | Emitted when an NFT withdraw intent is made |
-| `MtWithdraw` | Emitted when a multi-token withdraw intent is made |
-| `NativeWithdraw` | Emitted when a native NEAR withdraw intent is made |
-| `StorageDeposit` | Emitted when a storage deposit intent is submitted |
+| `PublicKeyAdded` | Emitted when a public key is added to an account. |
+| `PublicKeyRemoved` | Emitted when a public key is removed from an account. |
+| `Transfer` | Emitted when a transfer between two accounts executes. |
+| `TokenDiff` | Emitted when a `token_diff` intent executes successfully. |
+| `IntentsExecuted` | Emitted after successfully executing the listed intents. |
+| `FtWithdraw` | Emitted when a fungible token withdrawal intent is made. |
+| `NftWithdraw` | Emitted when an NFT withdrawal intent is made. |
+| `MtWithdraw` | Emitted when a multi-token withdrawal intent is made. |
+| `NativeWithdraw` | Emitted when a native NEAR withdrawal intent is made. |
+| `StorageDeposit` | Emitted when a storage deposit intent is submitted. |
 
 <Info>
 For withdrawal events, it is often difficult to emit only on success because the outcome depends on cross-contract calls.
@@ -67,9 +67,9 @@ Multi Token events indicate changes in the internal balances of the Verifier con
 
 | Event | Description |
 |-------|-------------|
-| [MtMintEvent](https://near.github.io/intents/defuse_nep245/struct.MtMintEvent.html) | Emitted when the balance of a given account increases (due to deposits) |
-| [MtBurnEvent](https://near.github.io/intents/defuse_nep245/struct.MtBurnEvent.html) | Emitted when the balance of a given account decreases (due to withdrawals) |
-| [MtTransferEvent](https://near.github.io/intents/defuse_nep245/struct.MtTransferEvent.html) | Emitted when tokens move between accounts (after executing intents like `TokenDiff`) |
+| [MtMintEvent](https://near.github.io/intents/defuse_nep245/struct.MtMintEvent.html) | Emitted when the balance of a given account increases (due to deposits). |
+| [MtBurnEvent](https://near.github.io/intents/defuse_nep245/struct.MtBurnEvent.html) | Emitted when the balance of a given account decreases (due to withdrawals). |
+| [MtTransferEvent](https://near.github.io/intents/defuse_nep245/struct.MtTransferEvent.html) | Emitted when tokens move between accounts (after executing intents like `token_diff`). |
 
 ### Why "mint" and "burn"?
 
