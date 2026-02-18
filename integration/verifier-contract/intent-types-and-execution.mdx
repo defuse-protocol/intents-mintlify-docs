@@ -120,6 +120,16 @@ Implicit account IDs have their corresponding public keys added by default. If a
 Public keys can also be added [via transactions](/integration/verifier-contract/account-abstraction).
 
 ```json
+{
+  "intent": "add_public_key",
+  "public_key": "ed25519:5TagutioHgKLh7KZ1VEFBYfgRkPtqnKm9LoMnJMJugxm"
+}
+```
+
+<Accordion title="Full signed intent example">
+The `message` field contains the intent JSON above, serialized as a single line with escaped quotes.
+
+```json
 [
   {
     "standard": "nep413",
@@ -133,10 +143,21 @@ Public keys can also be added [via transactions](/integration/verifier-contract/
   }
 ]
 ```
+</Accordion>
 
 ### remove_public_key
 
 Removes a public key from an account. Can also be done [via transactions](/integration/verifier-contract/account-abstraction).
+
+```json
+{
+  "intent": "remove_public_key",
+  "public_key": "ed25519:5TagutioHgKLh7KZ1VEFBYfgRkPtqnKm9LoMnJMJugxm"
+}
+```
+
+<Accordion title="Full signed intent example">
+The `message` field contains the intent JSON above, serialized as a single line with escaped quotes.
 
 ```json
 [
@@ -152,12 +173,26 @@ Removes a public key from an account. Can also be done [via transactions](/integ
   }
 ]
 ```
+</Accordion>
 
 ### transfer
 
 Transfers tokens from the signer to a specified account within the Verifier contract.
 
 Transfers can also be done [via direct blockchain transactions](https://near.github.io/intents/defuse_nep245/trait.MultiTokenCore.html#tymethod.mt_transfer).
+
+```json
+{
+  "intent": "transfer",
+  "receiver_id": "bob.near",
+  "tokens": {
+    "nep141:usdc.near": "10"
+  }
+}
+```
+
+<Accordion title="Full signed intent example">
+The `message` field contains the intent JSON above, serialized as a single line with escaped quotes.
 
 ```json
 [
@@ -173,6 +208,7 @@ Transfers can also be done [via direct blockchain transactions](https://near.git
   }
 ]
 ```
+</Accordion>
 
 <Info>
 Token IDs are specified in [Multi Token format](/integration/verifier-contract/deposits-and-withdrawals/balances).
@@ -192,6 +228,18 @@ See [Withdrawals](/integration/verifier-contract/deposits-and-withdrawals/withdr
 **Example:** Withdraw from Alice's account to Bob's account. On success, the tokens will be in the `usdc.near` contract under Bob's account—they have exited the Verifier:
 
 ```json
+{
+  "intent": "ft_withdraw",
+  "token": "usdc.near",
+  "receiver_id": "bob.near",
+  "amount": "1000"
+}
+```
+
+<Accordion title="Full signed intent example">
+The `message` field contains the intent JSON above, serialized as a single line with escaped quotes.
+
+```json
 [
   {
     "standard": "nep413",
@@ -205,12 +253,25 @@ See [Withdrawals](/integration/verifier-contract/deposits-and-withdrawals/withdr
   }
 ]
 ```
+</Accordion>
 
 ### storage_deposit
 
 Makes an [NEP-145](https://nomicon.io/Standards/StorageManagement#nep-145) `storage_deposit` call for an `account_id` on a `contract_id`. The `amount` is subtracted from the user's NEP-141 wNEAR balance and will not be refunded.
 
 **Example:** Pay for storage deposit in the `usdc.near` contract. The NEAR token specified will be taken from `alice.near`'s account and paid to `bob.near` in the `usdc.near` contract:
+
+```json
+{
+  "intent": "storage_deposit",
+  "contract_id": "usdc.near",
+  "account_id": "bob.near",
+  "amount": "1250000000000000000000"
+}
+```
+
+<Accordion title="Full signed intent example">
+The `message` field contains the intent JSON above, serialized as a single line with escaped quotes.
 
 ```json
 [
@@ -226,12 +287,41 @@ Makes an [NEP-145](https://nomicon.io/Standards/StorageManagement#nep-145) `stor
   }
 ]
 ```
+</Accordion>
 
 ### token_diff
 
 The user declares willingness to have a set of changes applied to their tokens. For example, a trade of 100 token A for 200 token B can be represented as `{"A": -100, "B": 200}`.
 
 **Example:** Two users trading USDC for USDT. Alice declares she'll give up 10 USDC to get 10 USDT; Bob declares the opposite. These intents can be matched through the Message Bus or any off-chain channel, then submitted together:
+
+<Tabs>
+  <Tab title="Alice's intent">
+  ```json
+  {
+    "intent": "token_diff",
+    "diff": {
+      "nep141:usdc.near": "-10",
+      "nep141:usdt.near": "10"
+    }
+  }
+  ```
+  </Tab>
+  <Tab title="Bob's intent">
+  ```json
+  {
+    "intent": "token_diff",
+    "diff": {
+      "nep141:usdc.near": "10",
+      "nep141:usdt.near": "-10"
+    }
+  }
+  ```
+  </Tab>
+</Tabs>
+
+<Accordion title="Full signed intent example">
+The `message` field contains the intent JSON above, serialized as a single line with escaped quotes.
 
 ```json
 [
@@ -257,5 +347,6 @@ The user declares willingness to have a set of changes applied to their tokens. 
   }
 ]
 ```
+</Accordion>
 
 As described in the [Introduction](/integration/verifier-contract/introduction), there are many ways to bundle these intents together for submission—the Message Bus, third parties, or any off-chain communication channel.
