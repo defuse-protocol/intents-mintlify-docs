@@ -4,9 +4,10 @@ description: 'Test intents without modifying blockchain state using the simulate
 icon: 'flask'
 ---
 
-The `execute_intents` function modifies the Verifier contract's state. However, the Verifier also offers the ability to simulate intents using [the function](https://near.github.io/intents/defuse/intents/trait.Intents.html#tymethod.simulate_intents) `simulate_intents`.
+The [`simulate_intents`](https://near.github.io/intents/defuse/intents/trait.Intents.html#tymethod.simulate_intents) function runs intent code **without** modifying the Verifier contract's state. It accepts the same [`MultiPayload`](https://near.github.io/intents/defuse_core/payload/multi/enum.MultiPayload.html) input as `execute_intents`.
 
-Simulation runs the intent code **without** modifying the Verifier contract's state.
+- For intent structure and types, see [Intent Types and Execution](/integration/verifier-contract/intent-types-and-execution).
+- For signing intents before simulation, see [Signing Intents](/integration/verifier-contract/signing-intents).
 
 ## When to use simulations
 
