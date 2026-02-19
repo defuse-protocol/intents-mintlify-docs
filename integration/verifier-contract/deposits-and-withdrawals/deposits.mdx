@@ -78,7 +78,7 @@ Replace `<token-contract>` with the token's contract address and adjust the `amo
 | `amount` | The amount in the token's smallest unit. Each token has different decimals (e.g., wNEAR has 24, USDC has 6). |
 | `msg` | Controls token ownership after deposit. See [The `msg` parameter](#the-msg-parameter) below. |
 | `--deposit` | 1 yoctoNEAR, required by the NEP-141 standard for `ft_transfer_call`. |
-| `--gas` | 100 TGas to cover the cross-contract call to the Verifier contract. |
+| `--gas` | Depends on the `msg` content. Should be calculated to cover the cross-contract call to the Verifier contract plus any promises triggered by the deposit (e.g., `execute_intents`). 100 TGas is sufficient for a simple deposit. |
 
 ### The `msg` parameter
 
