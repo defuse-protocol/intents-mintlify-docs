@@ -77,6 +77,10 @@ Replace `<token-contract>` with the token's contract address and adjust the `amo
 
 Submit a signed [FtWithdraw](https://near.github.io/intents/defuse_core/intents/tokens/struct.FtWithdraw.html) intent through `execute_intents`. When using intents, the token ID must include the respective prefix (`nep141:` | `nep171` | `nep245`).
 
+<Warning>
+Your public key must be registered with the Verifier contract before you can submit signed intents. For named accounts, call `add_public_key` on `intents.near`. Implicit accounts skip this step. See [Account Abstraction](/integration/verifier-contract/account-abstraction) for details.
+</Warning>
+
 ```json
 {
   "standard": "nep413",
