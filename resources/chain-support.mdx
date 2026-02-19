@@ -27,6 +27,10 @@ The list of supported chains is continuously expanding. Check this page regularl
       <p style={{textAlign: "center", margin: 0, fontWeight: 500}}>Arbitrum</p>
     </Card>
     <Card>
+      <img src="/images/chains/adi.jpeg" width="48" height="48" style={{display: "block", margin: "0 auto 8px", borderRadius: "8px"}} />
+      <p style={{textAlign: "center", margin: 0, fontWeight: 500}}>ADI</p>
+    </Card>
+    <Card>
       <img src="/images/chains/aurora.svg" width="48" height="48" style={{display: "block", margin: "0 auto 8px"}} />
       <p style={{textAlign: "center", margin: 0, fontWeight: 500}}>Aurora</p>
     </Card>
@@ -51,8 +55,30 @@ The list of supported chains is continuously expanding. Check this page regularl
       <p style={{textAlign: "center", margin: 0, fontWeight: 500}}>Gnosis</p>
     </Card>
     <Card>
+      <img src="/images/chains/optimism.svg" width="48" height="48" style={{display: "block", margin: "0 auto 8px"}} />
+      <p style={{textAlign: "center", margin: 0, fontWeight: 500}}>Optimism</p>
+    </Card>
+    <Card>
+      <img className="block dark:hidden" src="/images/chains/plasma.svg" width="48" height="48" style={{margin: "0 auto 8px"}} />
+      <img className="hidden dark:block" src="/images/chains/plasma-dark.svg" width="48" height="48" style={{margin: "0 auto 8px"}} />
+      <p style={{textAlign: "center", margin: 0, fontWeight: 500}}>Plasma</p>
+    </Card>
+    <Card>
       <img src="/images/chains/polygon.svg" width="48" height="48" style={{display: "block", margin: "0 auto 8px"}} />
       <p style={{textAlign: "center", margin: 0, fontWeight: 500}}>Polygon</p>
+    </Card>
+    <Card>
+      <img src="/images/chains/avalanche.svg" width="48" height="48" style={{display: "block", margin: "0 auto 8px"}} />
+      <p style={{textAlign: "center", margin: 0, fontWeight: 500}}>Avalanche</p>
+    </Card>
+    <Card>
+      <img src="/images/chains/monad.svg" width="48" height="48" style={{display: "block", margin: "0 auto 8px"}} />
+      <p style={{textAlign: "center", margin: 0, fontWeight: 500}}>Monad</p>
+    </Card>
+    <Card>
+      <img className="block dark:hidden" src="/images/chains/x-layer.svg" width="48" height="48" style={{margin: "0 auto 8px"}} />
+      <img className="hidden dark:block" src="/images/chains/x-layer-dark.svg" width="48" height="48" style={{margin: "0 auto 8px"}} />
+      <p style={{textAlign: "center", margin: 0, fontWeight: 500}}>XLayer</p>
     </Card>
   </CardGroup>
 
@@ -83,6 +109,14 @@ The list of supported chains is continuously expanding. Check this page regularl
     <Card>
       <img src="/images/chains/zcash.svg" width="48" height="48" noZoom style={{display: "block", margin: "0 auto 8px"}} />
       <p style={{textAlign: "center", margin: 0, fontWeight: 500}}>Zcash</p>
+    </Card>
+    <Card>
+      <img src="/images/chains/bitcoin-cash.svg" width="48" height="48" noZoom style={{display: "block", margin: "0 auto 8px"}} />
+      <p style={{textAlign: "center", margin: 0, fontWeight: 500}}>Bitcoin Cash</p>
+    </Card>
+    <Card>
+      <img src="/images/chains/litecoin.svg" width="48" height="48" noZoom style={{display: "block", margin: "0 auto 8px"}} />
+      <p style={{textAlign: "center", margin: 0, fontWeight: 500}}>Litecoin</p>
     </Card>
   </CardGroup>
 
@@ -125,12 +159,52 @@ The list of supported chains is continuously expanding. Check this page regularl
   <Warning>
   ⚠️ Partially supported - Transparent addresses only
   </Warning>
+
+  ### Bitcoin Cash
+
+  **Address Types:**
+  - **Legacy P2PKH** - Starts with `1`
+    - Example: `1BpEi6DfDAUFd7GtittLSdBeYJvcoaVggu`
+  - **Legacy P2SH** - Starts with `3`
+    - Example: `3CWFddi6m4ndiGyKqzYvsFYagqDLPVMTzC`
+  - **CashAddr P2PKH** - Starts with `q`
+    - Example: `bitcoincash:qpm2qsznhks23z7629mms6s4cwef74vcwvy22gdx6a`
+  - **CashAddr P2SH** - Starts with `p`
+    - Example: `bitcoincash:pqq3728yw0y47sqn6l2na30mcw6zm78dzq5ucqzc37`
+
+  <Check>
+  ✅ All address types supported
+  </Check>
+
+  ### Litecoin
+
+  **Address Types:**
+  - **Legacy** - Starts with `L`
+    - Example: `LZ3v1o8qK4b7sJ9mH2f5xQp8Pd1cR6TuVa`
+  - **P2SH** - Starts with `M` or `3`
+    - Example: `MDf8y1Kq9Tm5sR3aP7uW4cXn2Lb6vZjQhE`
+  - **Bech32** - Starts with `ltc1q`
+    - Example: `ltc1q9k3p7u5n0s4y8v2h3w6j5c9r2t0m4k7f5p0d2`
+  - **Taproot** - Starts with `ltc1p`
+    - Example: `ltc1p4h7q9m3x5u2n8k6t4v9y3r5c2w7z0l3p5u8y6f0k2d`
+
+  <Check>
+  ✅ Fully supported
+  </Check>
 </Tab>
 
 <Tab title="Layer 1 Chains">
   ### Layer 1 blockchains
 
   <CardGroup cols={4}>
+    <Card>
+      <img src="/images/chains/aleo.png" width="48" height="48" noZoom style={{display: "block", margin: "0 auto 8px", borderRadius: "8px"}} />
+      <p style={{textAlign: "center", margin: 0, fontWeight: 500}}>Aleo</p>
+    </Card>
+    <Card>
+      <img src="/images/chains/cardano.svg" width="48" height="48" noZoom style={{display: "block", margin: "0 auto 8px"}} />
+      <p style={{textAlign: "center", margin: 0, fontWeight: 500}}>Cardano</p>
+    </Card>
     <Card>
       <img src="/images/chains/near-protocol.svg" width="48" height="48" noZoom style={{display: "block", margin: "0 auto 8px"}} />
       <p style={{textAlign: "center", margin: 0, fontWeight: 500}}>NEAR</p>
@@ -159,7 +233,32 @@ The list of supported chains is continuously expanding. Check this page regularl
       <img src="/images/chains/xrp.svg" width="48" height="48" noZoom style={{display: "block", margin: "0 auto 8px"}} />
       <p style={{textAlign: "center", margin: 0, fontWeight: 500}}>XRP</p>
     </Card>
+    <Card>
+      <img src="/images/chains/starknet.svg" width="48" height="48" noZoom style={{display: "block", margin: "0 auto 8px"}} />
+      <p style={{textAlign: "center", margin: 0, fontWeight: 500}}>Starknet</p>
+    </Card>
   </CardGroup>
+
+  ### Aleo
+
+  **Address Format:**
+  - 63-character Bech32 with `aleo1` prefix
+  - Example: `aleo1kelm7k8786anyygg788ntlgkx4uqkmkpj7k5ugfuqchd8rnf858sun3qcr`
+
+  <Check>
+  ✅ Fully supported
+  </Check>
+
+  ### Cardano
+
+  **Address Types:**
+  - **Shelley Base** - Full address with staking key
+  - **Enterprise** - Payment-only address
+    - Example: `addr1v8wfpcg4qfhmnzprzysj6j9c53u5j56j8rvhyjp08s53s6g07rfjm`
+
+  <Warning>
+  ⚠️ Partially supported
+  </Warning>
 
   ### NEAR Protocol
 
@@ -206,6 +305,16 @@ The list of supported chains is continuously expanding. Check this page regularl
 
   **Signing Standard:**
   - SEP-53 (Freighter, Lumens Wallet, SatoshiPay)
+
+  <Check>
+  ✅ Fully supported
+  </Check>
+
+  ### Starknet
+
+  **Address Format:**
+  - 251-bit hexadecimal address starting with `0x`
+  - Example: `0x033068F6539f8e6e6b131e6B2B814e6c34A5224bC66947c47DaB9dFeE93b35fb`
 
   <Check>
   ✅ Fully supported
@@ -287,7 +396,9 @@ Each supported chain provides access to native tokens and popular standards:
   <img src="/images/chains/bitcoin.svg" width="48" height="48" noZoom style={{display: "block", margin: "0 auto 8px"}} />
   <p style={{textAlign: "center", margin: "0 0 8px", fontWeight: 500, color: "#ffffff"}}>Bitcoin Networks</p>
   - BTC (Bitcoin)
+  - BCH (Bitcoin Cash)
   - DOGE (Dogecoin)
+  - LTC (Litecoin)
   - ZEC (Zcash - transparent only)
 </Card>
 
@@ -305,14 +416,20 @@ Each supported chain provides access to native tokens and popular standards:
     <img src="/images/chains/sui.svg" width="40" height="40" noZoom />
     <img src="/images/chains/ton.svg" width="40" height="40" noZoom />
     <img src="/images/chains/xrp.svg" width="40" height="40" noZoom />
+    <img src="/images/chains/starknet.svg" width="40" height="40" noZoom />
+    <img src="/images/chains/aleo.png" width="40" height="40" noZoom style={{borderRadius: "8px"}} />
+    <img src="/images/chains/cardano.svg" width="40" height="40" noZoom />
   </div>
   <p style={{textAlign: "center", margin: "0 0 8px", fontWeight: 500, color: "#ffffff"}}>Other Layer 1 Chains</p>
+  - ADA (Cardano)
+  - ALEO (Aleo)
   - SOL (Solana) + SPL tokens
   - SUI native and wrapped tokens
   - XLM (Stellar) + issued assets
   - TON + jettons
   - TRX (Tron) + TRC-20 tokens
   - XRP (Ripple)
+  - STRK (Starknet)
 </Card>
 </CardGroup>
 
