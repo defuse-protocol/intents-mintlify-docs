@@ -75,7 +75,7 @@ Replace `<token-contract>` with the token's contract address and adjust the `amo
 
 ### Via signed intent
 
-Submit a signed [FtWithdraw](https://near.github.io/intents/defuse_core/intents/tokens/struct.FtWithdraw.html) intent through `execute_intents`. When using intents, the token ID must include the `nep141:` prefix.
+Submit a signed [FtWithdraw](https://near.github.io/intents/defuse_core/intents/tokens/struct.FtWithdraw.html) intent through `execute_intents`. When using intents, the token ID must include the respective prefix (`nep141:` | `nep171` | `nep245`).
 
 ```json
 {
