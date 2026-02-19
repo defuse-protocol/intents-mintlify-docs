@@ -4,7 +4,12 @@ description: 'Depositing fungible and non-fungible tokens into the Verifier cont
 icon: 'arrow-right-to-bracket'
 ---
 
-Before you can swap or transfer tokens on the Verifier contract, you need to deposit them. Depositing moves tokens from your NEAR account into the contract's internal ledger, where they can be used for [intents](/integration/verifier-contract/intent-types-and-execution). Only [NEP-141](https://nomicon.io/Standards/Tokens/FungibleToken/Core) fungible tokens and [NEP-171](https://nomicon.io/Standards/Tokens/NonFungibleToken/Core) non-fungible tokens are accepted.
+Before you can swap or transfer tokens on the Verifier contract, you need to deposit them. Depositing moves tokens from your NEAR account into the contract's internal ledger, where they can be used for [intents](/integration/verifier-contract/intent-types-and-execution). 
+
+The contract accepts: 
+- [NEP-141](https://nomicon.io/Standards/Tokens/FungibleToken/Core) fungible tokens
+- [NEP-171](https://nomicon.io/Standards/Tokens/NonFungibleToken/Core) non-fungible tokens
+- [NEP-245](https://nomicon.io/Standards/Tokens/MultiToken/Core) multi tokens
 
 <Danger>
 Do not send native NEAR directly to the Verifier contract. 
@@ -18,7 +23,7 @@ The Verifier contract implements the [FungibleTokenReceiver](https://docs.near.o
 
 To deposit tokens, call `ft_transfer_call` ([function signature](https://github.com/near/near-sdk-rs/blob/611e01ebf6c226f4e1e820a2f50f4a9acf8f1215/examples/fungible-token/ft/src/lib.rs#L103)) on the token contract, with an `msg` parameter specifying who will own the tokens.
 
-For a list of NEP-141 token contract addresses deposited into the Verifier contract, run:
+Any NEP-141 token can be deposited. For a list of NEP-141 token contract addresses deposited into the Verifier contract, run:
 
 ```bash
 curl -s https://1click.chaindefuser.com/v0/tokens | jq -r '.[] | select(.blockchain == "near") | [.symbol, (.price | tostring), .contractAddress] | @tsv' | column -t -s $'\t'
@@ -68,7 +73,7 @@ Replace `<token-contract>` with the token's contract address and adjust the `amo
 
 | Parameter | Description |
 |-----------|-------------|
-| `<token-contract>` | The token contract you're depositing from (e.g., `wrap.near` for wNEAR, `eth.bridge.near` for ETH). Use the [command above](#depositing-fungible-tokens-nep-141) to list available contract addresses. |
+| `<token-contract>` | The NEP-141 token contract you're depositing from (e.g., `wrap.near` for wNEAR, `eth.bridge.near` for ETH). Any NEP-141 token can be deposited. |
 | `receiver_id` | Always `intents.near` (the Verifier contract). |
 | `amount` | The amount in the token's smallest unit. Each token has different decimals (e.g., wNEAR has 24, USDC has 6). |
 | `msg` | Controls token ownership after deposit. See [The `msg` parameter](#the-msg-parameter) below. |
@@ -142,4 +147,10 @@ View these deposit transactions on NEAR mainnet:
 The Verifier contract implements the [NonFungibleTokenReceiver](https://docs.near.org/primitives/nft) interface ([NEP-171](https://nomicon.io/Standards/Tokens/NonFungibleToken/Core) standard).
 
 To transfer NFTs to the Verifier, use `nft_transfer_call` with the same `msg` format rules as fungible tokens.
+
+## Depositing multi tokens (NEP-245)
+
+The Verifier contract implements the [MultiTokenReceiver](https://nomicon.io/Standards/Tokens/MultiToken/Core) interface ([NEP-245](https://nomicon.io/Standards/Tokens/MultiToken/Core) standard).
+
+To deposit multi tokens, use `mt_batch_transfer_call` with the same `msg` format rules as fungible tokens.
 
