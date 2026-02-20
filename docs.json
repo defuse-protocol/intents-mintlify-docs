@@ -199,5 +199,135 @@
   },
   "appearance": {
     "default": "dark"
-  }
+  },
+  "redirects": [
+    {
+      "source": "/near-intents",
+      "destination": "/index"
+    },
+    {
+      "source": "/near-intents/integration/distribution-channels",
+      "destination": "/integration/distribution-channels/introduction"
+    },
+    {
+      "source": "/near-intents/integration/distribution-channels/1click-api",
+      "destination": "/integration/distribution-channels/1click-api/about-1click-api"
+    },
+    {
+      "source": "/near-intents/integration/distribution-channels/1click-terms-of-service",
+      "destination": "/security-compliance/terms-of-service"
+    },
+    {
+      "source": "/near-intents/integration/distribution-channels/1click-app-fees-calculation",
+      "destination": "/integration/distribution-channels/1click-api/fee-config"
+    },
+    {
+      "source": "/near-intents/integration/distribution-channels/1click-app-fees-calculation/aggregate-fees-from-any-token-into-desired-asset",
+      "destination": "/integration/distribution-channels/1click-api/fee-config"
+    },
+    {
+      "source": "/near-intents/integration/distribution-channels/intents-explorer-api",
+      "destination": "/api-reference/explorer/introduction"
+    },
+    {
+      "source": "/near-intents/market-makers",
+      "destination": "/integration/market-makers/introduction"
+    },
+    {
+      "source": "/near-intents/market-makers/bus",
+      "destination": "/integration/market-makers/message-bus/introduction"
+    },
+    {
+      "source": "/near-intents/market-makers/bus/solver-relay",
+      "destination": "/integration/market-makers/message-bus/api"
+    },
+    {
+      "source": "/near-intents/market-makers/bus/usage-examples",
+      "destination": "/integration/market-makers/message-bus/usage-examples"
+    },
+    {
+      "source": "/near-intents/market-makers/passive-deposit-withdrawal-service",
+      "destination": "/integration/market-makers/deposit-withdrawal-service"
+    },
+    {
+      "source": "/near-intents/market-makers/verifier",
+      "destination": "/integration/verifier-contract/introduction"
+    },
+    {
+      "source": "/near-intents/market-makers/verifier/introduction",
+      "destination": "/integration/verifier-contract/introduction"
+    },
+    {
+      "source": "/near-intents/market-makers/verifier/deposits-and-withdrawals",
+      "destination": "/integration/verifier-contract/deposits-and-withdrawals/deposits"
+    },
+    {
+      "source": "/near-intents/market-makers/verifier/deposits-and-withdrawals/near-token-treatment",
+      "destination": "/integration/verifier-contract/deposits-and-withdrawals/near-token"
+    },
+    {
+      "source": "/near-intents/market-makers/verifier/deposits-and-withdrawals/deposits",
+      "destination": "/integration/verifier-contract/deposits-and-withdrawals/deposits"
+    },
+    {
+      "source": "/near-intents/market-makers/verifier/deposits-and-withdrawals/balances-and-identifying-your-token",
+      "destination": "/integration/verifier-contract/deposits-and-withdrawals/balances"
+    },
+    {
+      "source": "/near-intents/market-makers/verifier/deposits-and-withdrawals/withdrawals",
+      "destination": "/integration/verifier-contract/deposits-and-withdrawals/withdrawals"
+    },
+    {
+      "source": "/near-intents/market-makers/verifier/account-abstraction",
+      "destination": "/integration/verifier-contract/account-abstraction"
+    },
+    {
+      "source": "/near-intents/market-makers/verifier/intent-types-and-execution",
+      "destination": "/integration/verifier-contract/intent-types-and-execution"
+    },
+    {
+      "source": "/near-intents/market-makers/verifier/signing-intents",
+      "destination": "/integration/verifier-contract/signing-intents"
+    },
+    {
+      "source": "/near-intents/market-makers/verifier/events",
+      "destination": "/integration/verifier-contract/events"
+    },
+    {
+      "source": "/near-intents/market-makers/verifier/example-transactions",
+      "destination": "/integration/verifier-contract/introduction"
+    },
+    {
+      "source": "/near-intents/market-makers/verifier/simulating-intents",
+      "destination": "/integration/verifier-contract/simulating-intents"
+    },
+    {
+      "source": "/near-intents/faqs",
+      "destination": "/resources/faqs"
+    },
+    {
+      "source": "/near-intents/security",
+      "destination": "/security-compliance/security"
+    },
+    {
+      "source": "/near-intents/risk-and-compliance",
+      "destination": "/security-compliance/risk-and-compliance"
+    },
+    {
+      "source": "/near-intents/chain-address-support",
+      "destination": "/resources/chain-support"
+    },
+    {
+      "source": "/near-intents/treasury-addresses",
+      "destination": "/security-compliance/treasury-addresses"
+    },
+    {
+      "source": "/near-intents/fees",
+      "destination": "/resources/fees"
+    },
+    {
+      "source": "/near-intents/examples",
+      "destination": "/getting-started/first-swap"
+    }
+  ]
 }
