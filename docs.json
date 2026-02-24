@@ -172,7 +172,7 @@
     ],
     "primary": {
       "type": "button",
-      "label": "Partner Portal",
+      "label": "Partners",
       "href": "https://partners.near-intents.org/"
     }
   },
