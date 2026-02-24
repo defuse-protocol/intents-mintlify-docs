@@ -75,7 +75,11 @@ Replace `<token-contract>` with the token's contract address and adjust the `amo
 
 ### Via signed intent
 
-Submit a signed [FtWithdraw](https://near.github.io/intents/defuse_core/intents/tokens/struct.FtWithdraw.html) intent through `execute_intents`. When using intents, the token ID must include the `nep141:` prefix.
+Submit a signed [FtWithdraw](https://near.github.io/intents/defuse_core/intents/tokens/struct.FtWithdraw.html) intent through `execute_intents`. Withdraw intents (`ft_withdraw`, `nft_withdraw`, `mt_withdraw`) use unprefixed token IDs (e.g., `usdc.near`). Token prefixes like `nep141:` are only used in `transfer` and `token_diff` intents.
+
+<Warning>
+Your public key must be registered with the Verifier contract before you can submit signed intents. For named accounts, call `add_public_key` on `intents.near`. Implicit accounts skip this step. See [Account Abstraction](/integration/verifier-contract/account-abstraction) for details.
+</Warning>
 
 ```json
 {
@@ -83,7 +87,7 @@ Submit a signed [FtWithdraw](https://near.github.io/intents/defuse_core/intents/
   "payload": {
     "recipient": "intents.near",
     "nonce": "Vij2xgAlKBKzgNPJFViEQRhPvveC+P9xRwOXFW/IK5w=",
-    "message": "{\"deadline\":\"2025-05-20T13:29:34.360380Z\",\"intents\":[{\"intent\":\"ft_withdraw\",\"token\":\"nep141:wrap.near\",\"receiver_id\":\"alice.near\",\"amount\":\"1000\"}],\"signer_id\":\"user1.test.near\"}"
+    "message": "{\"deadline\":\"2025-05-20T13:29:34.360380Z\",\"intents\":[{\"intent\":\"ft_withdraw\",\"token\":\"wrap.near\",\"receiver_id\":\"alice.near\",\"amount\":\"1000\"}],\"signer_id\":\"user1.test.near\"}"
   },
   "public_key": "ed25519:C3jXhkGhEx88Gj7XKtUziJKXEBMRaJ67bWFkxJikVxZ2",
   "signature": "ed25519:5op5APf9YaRznvMVwZBw6GGk9ychU3QtNRKJSxuVajHFMQths4ZZMRoAENU1zWhjinqz8KuLNyM9589c86opopyT"
