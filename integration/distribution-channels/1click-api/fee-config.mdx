@@ -12,17 +12,17 @@ This guide covers **distribution channel fees** (fees you collect). For an overv
 
 ## Fee Parameters
 
-Include these parameters in the `appFees` object when requesting a quote:
+Include these parameters in the `appFees` array when requesting a quote:
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
+| Parameter   | Type   | Description                                                                                         |
+|-------------|--------|-----------------------------------------------------------------------------------------------------|
 | `recipient` | string | Any NEAR-supported address (named account like `alice.near`, implicit account, or EVM-like address) |
-| `fee_bps` | number | Fee in basis points. `100` = `1.00%`. Fee is charged from the input token. |
+| `fee`       | number | Fee in basis points. `100` = `1.00%`. Fee is charged from the input token.                          |
 
 <Info>
-**Conversion formula:** `percentage = fee_bps / 10,000`
+**Conversion formula:** `percentage = fee / 10,000`
 
-For example, `fee_bps: 50` equals 0.5% fee.
+For example, `fee: 50` equals 0.5% fee.
 </Info>
 
 ## Constraints
@@ -37,12 +37,12 @@ Fees are calculated differently depending on the swap type:
 <Tab title="EXACT_IN">
 For EXACT_IN swaps, the fee is deducted from your input amount before the swap:
 
-1. `net_in = amount_in * (1 - p)` where `p = fee_bps / 10,000`
+1. `net_in = amount_in * (1 - p)` where `p = fee / 10,000`
 2. The quote calculates `amount_out` from `net_in`
 3. `fee_amount = amount_in - net_in` (deducted in input token)
 
 **Example:**
-- Input: `amount_in = 1,000,000`, `fee_bps = 100` (1%)
+- Input: `amount_in = 1,000,000`, `fee = 100` (1%)
 - Calculation: `net_in = 1,000,000 * (1 - 0.01) = 990,000`
 - User deposits `1,000,000` and quote calculates output from `990,000`
 - Fee: `10,000` units (in input token)
@@ -51,12 +51,12 @@ For EXACT_IN swaps, the fee is deducted from your input amount before the swap:
 <Tab title="EXACT_OUT">
 For EXACT_OUT swaps, the fee increases the required input amount:
 
-1. `net_in = min_amount_in * (1 + p)` where `p = fee_bps / 10,000`
+1. `net_in = min_amount_in * (1 + p)` where `p = fee / 10,000`
 2. `fee_amount = net_in - min_amount_in` (deducted in input token)
 3. If user deposits more than `min_amount_in`, fees are deducted from actual `amount_in`
 
 **Example:**
-- Input: `min_amount_in = 500,000`, `fee_bps = 100` (1%)
+- Input: `min_amount_in = 500,000`, `fee = 100` (1%)
 - Calculation: `net_in = 500,000 * (1 + 0.01) = 505,000`
 - User must deposit `505,000` to receive the exact output amount
 - Fee: `5,000` units (in input token)
@@ -76,10 +76,10 @@ For EXACT_OUT swaps, the fee increases the required input amount:
   "recipientType": "INTENTS",
   "refundTo": "user.near",
   "refundType": "INTENTS",
-  "appFees": {
+  "appFees": [{
     "recipient": "your-fee-wallet.near",
-    "fee_bps": 50
-  }
+    "fee": 50
+  }]
 }
 ```
 
@@ -155,13 +155,13 @@ Set `quoteWaitingTimeMs` to 5000-10000ms for optimal performance.
 
 ### Key Fields
 
-| Field | Description |
-|-------|-------------|
-| `originAsset` | Must be `"1cs:any"` for fee aggregation |
-| `destinationAsset` | Token you want to collect fees in |
-| `recipient` | Address where converted fees will be withdrawn |
-| `recipientType` | `"DESTINATION_CHAIN"` or `"INTENTS"` |
-| `refundTo` | Set to an address you control |
+| Field              | Description                                    |
+|--------------------|------------------------------------------------|
+| `originAsset`      | Must be `"1cs:any"` for fee aggregation        |
+| `destinationAsset` | Token you want to collect fees in              |
+| `recipient`        | Address where converted fees will be withdrawn |
+| `recipientType`    | `"DESTINATION_CHAIN"` or `"INTENTS"`           |
+| `refundTo`         | Set to an address you control                  |
 
 ### Checking Withdrawals
 
@@ -198,15 +198,15 @@ GET /v0/any-input/withdrawals?depositAddress=YOUR_DEPOSIT_ADDRESS
 
 **Response Fields:**
 
-| Field | Description |
-|-------|-------------|
-| `status` | Withdrawal status (e.g., `SUCCESS`) |
-| `amountOut` | Raw amount withdrawn |
-| `amountOutFormatted` | Human-readable amount |
-| `amountOutUsd` | USD value at time of withdrawal |
-| `withdrawFee` | Fee charged for withdrawal |
-| `timestamp` | When the withdrawal occurred |
-| `hash` | Transaction hash |
+| Field                | Description                         |
+|----------------------|-------------------------------------|
+| `status`             | Withdrawal status (e.g., `SUCCESS`) |
+| `amountOut`          | Raw amount withdrawn                |
+| `amountOutFormatted` | Human-readable amount               |
+| `amountOutUsd`       | USD value at time of withdrawal     |
+| `withdrawFee`        | Fee charged for withdrawal          |
+| `timestamp`          | When the withdrawal occurred        |
+| `hash`               | Transaction hash                    |
 
 <Info>
 Each response contains up to 50 records, ordered by timestamp descending.
