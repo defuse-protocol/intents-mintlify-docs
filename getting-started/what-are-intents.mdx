@@ -1,73 +1,82 @@
 ---
 title: "What are Intents?"
 sidebarTitle: "What are Intents?"
-description: "A multi-chain transaction protocol where users specify desired outcomes and market makers compete for best execution."
+description: "Let users specify what they want, not how to get it."
 icon: 'lightbulb'
 ---
 
-<img className="block dark:hidden" src="/images/diagrams/intents-intro-light.png" alt="NEAR Intents Architecture" />
-<img className="hidden dark:block" src="/images/diagrams/intents-intro-dark.png" alt="NEAR Intents Architecture" />
+An intent expresses **what you want** to achieve, **not how to get it**. This way, if you want to integrate cross-chain swaps, instead of creating code to bridge assets, find quotes, and execute swaps, you simply build an intent stating: <span class="primary">_"I have 1 ETH on Ethereum, I want USDC on Arbitrum"_</span>.
 
-## What are NEAR Intents?
+<div style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden" }}>
+  <iframe
+    src="https://www.youtube.com/embed/mOGD2gzZJqE"
+    title="NEAR 101: Introduction to Intents"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerPolicy="strict-origin-when-cross-origin"
+    allowFullScreen
+    style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+  />
+</div>
 
-NEAR Intents is a multichain transaction protocol where users specify desired outcomes and market makers compete for best execution.
-
-**An intent is what you want, not how to get it.** Instead of manually bridging, wrapping, swapping, and bridging again... Just say: _"I have 1 ETH on Ethereum, I want USDC on Arbitrum."_ 
-Market makers compete to fulfill your intent, and smart contracts guarantee atomic execution.
+---
 
 ## How it works
 
-<Steps>
-<Step title="You create an intent">
-  Specify your desired outcome: the tokens you have, the tokens you want, and where you want them delivered.
-</Step>
+<Columns cols={2}>
+  <Steps>
+    <Step title="You create an intent">
+      Specify your desired outcome: the tokens you have, the tokens you want, and where you want them delivered.
+    </Step>
 
-<Step title="Market makers compete">
-  Multiple market makers bid to fulfill your intent (quote request), competing on price, speed, and execution quality.
-</Step>
+    <Step title="Market makers compete">
+      Multiple market makers bid to fulfill your intent (quote request), competing on price, speed, and execution quality.
+    </Step>
 
-<Step title="Smart contracts verify">
- Approved quotes are submitted to a smart contract ensuring atomic execution; your swap either completes fully or you're automatically refunded.
-</Step>
+    <Step title="Smart contracts verify">
+    Approved quotes are submitted to a smart contract ensuring atomic execution; your swap either completes fully or you get automatically refunded.
+    </Step>
 
-<Step title="You receive your tokens">
-  Your requested tokens arrive at your destination address, secured by on-chain verification.
-</Step>
-</Steps>
+    <Step title="You receive your tokens">
+      Your requested tokens arrive at the destination address you choose, secured by on-chain verification.
+    </Step>
+  </Steps>
+
+  <div className="intent-diagram-desktop-only" style={{ alignItems: "center", height: "100%" }}>
+    <img height="100%" src="/images/diagrams/what-are-intents.svg" alt="NEAR Intents Architecture" />
+  </div>
+</Columns>
+
+---
 
 ## Key benefits
 
-<CardGroup cols={1}>
-<Card title="Simplest cross-chain experience" icon="sparkles" horizontal>
-  The easiest way to transact across multiple chains and protocols. One simple request replaces dozens of complex steps.
-</Card>
+<CardGroup cols={2}>
+  <Card title="Seamless Experience" icon="sparkles" horizontal>
+    A simple request replaces dozens of complex steps 
+  </Card>
 
-<Card title="Use any account on any chain" icon="wallet" horizontal>
-  No need for accounts on multiple networks. Use your existing wallet on any supported chain—no NEAR account required.
-</Card>
+  <Card title="Settles in Seconds" icon="bolt" horizontal>
+    Solvers compete to fulfill your intent as quickly as possible
+  </Card>
 
-<Card title="Competitive pricing" icon="chart-line" horizontal>
-  Market makers compete for your business, ensuring you get optimal rates without manual price comparison.
-</Card>
+  <Card title="Use Your Wallets" icon="wallet" horizontal>
+    Use your existing wallets on any supported chain
+  </Card>
 
-<Card title="Automatic refunds" icon="shield-check" horizontal>
-  If execution fails for any reason, your funds are automatically returned to your designated refund address.
-</Card>
+  <Card title="Competitive pricing" icon="chart-line" horizontal>
+    Competition ensures optimal rates and low slippage
+  </Card>
 
-<Card title="Non-custodial security" icon="lock-keyhole" horizontal>
-  You maintain control of your assets throughout. Smart contracts enforce atomic execution guarantees.
-</Card>
+  <Card title="Automatic refunds" icon="shield-check" horizontal>
+    Get automatically refunded if the deal can't be executed
+  </Card>
+
+  <Card title="Non-Custodial Security" icon="lock-keyhole" horizontal>
+    You maintain control of your assets throughout the process
+  </Card>
 </CardGroup>
 
-import IntegrationCards from "/snippets/integration-cards.mdx";
-
-## Choose your integration path
-
-<IntegrationCards />
-
-<Info>
-**Recently renamed**: NEAR Intents was previously known as "Defuse". While documentation is being updated, you may see references to both names.
-</Info>
+---
 
 ## Learn more
 
@@ -89,6 +98,8 @@ import IntegrationCards from "/snippets/integration-cards.mdx";
 </Accordion>
 </AccordionGroup>
 
+---
+
 ## Additional Resources
 
 <Card
@@ -106,4 +117,3 @@ import IntegrationCards from "/snippets/integration-cards.mdx";
 >
   Learn the basics of what NEAR Intents are and how they work in this video overview.
 </Card>
-

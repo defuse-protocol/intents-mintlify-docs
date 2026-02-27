@@ -1,25 +1,16 @@
 ---
 title: "Supported Chains"
-description: "Blockchains, address formats, and signing standards supported by NEAR Intents"
+description: "Supported chains, address formats, and signing standards"
 icon: "link"
 ---
-
-NEAR Intents supports cross-chain transactions across major blockchain networks. Each chain supports specific address formats and signing standards to ensure secure, verified transactions.
 
 <Info>
 The list of supported chains is continuously expanding. Check this page regularly for updates or [join our Telegram community](https://t.me/near_intents) for announcements.
 </Info>
 
-
-## Supported blockchains
-
 <Tabs>
 <Tab title="EVM Chains">
-  ### Ethereum Virtual Machine (EVM) Compatible
-
-  All EVM-compatible chains use the same address format and signing standards.
-
-  **Supported Networks:**
+  ## Supported Networks
 
   <CardGroup cols={4}>
     <Card>
@@ -82,11 +73,11 @@ The list of supported chains is continuously expanding. Check this page regularl
     </Card>
   </CardGroup>
 
-  **Address Format:**
+  ### Address Format
   - `0x`-prefixed hexadecimal (42 characters)
   - Example: `0x85F17Cf997934a597031b2E18a9aB6ebD4B9f6a4`
 
-  **Signing Standard:**
+  ### Signing Standard
   - ERC-191 (all EVM wallets: MetaMask, Rabby, Rainbow, WalletConnect)
 
   <Check>
@@ -95,7 +86,7 @@ The list of supported chains is continuously expanding. Check this page regularl
 </Tab>
 
 <Tab title="Bitcoin & Forks">
-  ### Bitcoin and related networks
+  ## Supported Networks
 
   <CardGroup cols={4}>
     <Card>
@@ -194,7 +185,7 @@ The list of supported chains is continuously expanding. Check this page regularl
 </Tab>
 
 <Tab title="Layer 1 Chains">
-  ### Layer 1 blockchains
+  ## Supported Networks
 
   <CardGroup cols={4}>
     <Card>
@@ -360,88 +351,48 @@ The list of supported chains is continuously expanding. Check this page regularl
 </Tab>
 </Tabs>
 
+---
+
 ## Signing standards reference
 
 NEAR Intents supports multiple signing standards to work with different wallet types and blockchain ecosystems.
 
-| Standard | Compatible Wallets | Status |
-|----------|-------------------|--------|
-| **NEP-413** | NEAR wallets: MyNearWallet, Meteor, Sender, Ledger-NEAR | ✅ Implemented |
-| **ERC-191** | All EVM wallets: MetaMask, Rabby, Rainbow, WalletConnect-compatible | ✅ Implemented |
-| **Raw Ed25519** | Solana wallets: Phantom, Solflare, Slope | ✅ Implemented |
-| **Passkeys (WebAuthn)** | Browsers/OS: Chrome, Safari, Edge, Firefox, native apps | ✅ Implemented |
-| **SEP-53** | Stellar wallets: Freighter, Lumens Wallet, SatoshiPay | ✅ Implemented |
-| **TIP-191** | TRON wallets: TronLink, Klever, Trust Wallet | ✅ Implemented |
-| **TON Connect** | TON wallets: Tonkeeper, EverWallet, HOT Wallet | ✅ Implemented |
-| **BIP-322** | Bitcoin wallets: Sparrow, Bitcoin Knots, Bitcoin Core | ⚙️ In progress |
+| Standard                | Compatible Wallets                                                  | Status        |
+|-------------------------|---------------------------------------------------------------------|---------------|
+| **NEP-413**             | NEAR wallets: MyNearWallet, Meteor, Sender, Ledger-NEAR             | ✅ Implemented |
+| **ERC-191**             | All EVM wallets: MetaMask, Rabby, Rainbow, WalletConnect-compatible | ✅ Implemented |
+| **Raw Ed25519**         | Solana wallets: Phantom, Solflare, Slope                            | ✅ Implemented |
+| **Passkeys (WebAuthn)** | Browsers/OS: Chrome, Safari, Edge, Firefox, native apps             | ✅ Implemented |
+| **SEP-53**              | Stellar wallets: Freighter, Lumens Wallet, SatoshiPay               | ✅ Implemented |
+| **TIP-191**             | TRON wallets: TronLink, Klever, Trust Wallet                        | ✅ Implemented |
+| **TON Connect**         | TON wallets: Tonkeeper, EverWallet, HOT Wallet                      | ✅ Implemented |
+| **BIP-322**             | Bitcoin wallets: Sparrow, Bitcoin Knots, Bitcoin Core               | ⚙️ In progress |
 
 <Tip>
 For technical details on how intent signing works, see [Signing Intents](/integration/verifier-contract/signing-intents).
 </Tip>
 
+---
+
 ## Token support
 
 Each supported chain provides access to native tokens and popular standards:
 
-<CardGroup cols={2}>
-<Card>
-  <img src="/images/chains/ethereum.svg" width="48" height="48" noZoom style={{display: "block", margin: "0 auto 8px"}} />
-  <p style={{textAlign: "center", margin: "0 0 8px", fontWeight: 500, color: "#ffffff"}}>EVM Chains</p>
-  - Native tokens (ETH, BNB, MATIC, etc.)
-  - ERC-20 tokens
-  - Automatic token detection
-</Card>
+| Category             | Supported tokens and standards                                                                                                                                                                |
+|----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| EVM Chains           | Native tokens (ETH, BNB, MATIC, etc.); ERC-20 tokens; automatic token detection                                                                                                               |
+| Bitcoin Networks     | BTC (Bitcoin), BCH (Bitcoin Cash), DOGE (Dogecoin), LTC (Litecoin), ZEC (Zcash, transparent only)                                                                                             |
+| NEAR Ecosystem       | NEAR native token; NEP-141 fungible tokens; bridged assets                                                                                                                                    |
+| Other Layer 1 chains | ADA (Cardano), ALEO (Aleo), SOL (Solana) + SPL tokens, SUI native and wrapped tokens, XLM (Stellar) + issued assets, TON + jettons, TRX (Tron) + TRC-20 tokens, XRP (Ripple), STRK (Starknet) |
 
-<Card>
-  <img src="/images/chains/bitcoin.svg" width="48" height="48" noZoom style={{display: "block", margin: "0 auto 8px"}} />
-  <p style={{textAlign: "center", margin: "0 0 8px", fontWeight: 500, color: "#ffffff"}}>Bitcoin Networks</p>
-  - BTC (Bitcoin)
-  - BCH (Bitcoin Cash)
-  - DOGE (Dogecoin)
-  - LTC (Litecoin)
-  - ZEC (Zcash - transparent only)
-</Card>
-
-<Card>
-  <img src="/images/chains/near-protocol.svg" width="48" height="48" noZoom style={{display: "block", margin: "0 auto 8px"}} />
-  <p style={{textAlign: "center", margin: "0 0 8px", fontWeight: 500, color: "#ffffff"}}>NEAR Ecosystem</p>
-  - NEAR native token
-  - NEP-141 fungible tokens
-  - Bridged assets
-</Card>
-
-<Card>
-  <div style={{display: "flex", justifyContent: "center", alignItems: "center", gap: "12px", height: "48px", margin: "0 auto 8px"}}>
-    <img src="/images/chains/solana.svg" width="40" height="40" noZoom />
-    <img src="/images/chains/sui.svg" width="40" height="40" noZoom />
-    <img src="/images/chains/ton.svg" width="40" height="40" noZoom />
-    <img src="/images/chains/xrp.svg" width="40" height="40" noZoom />
-    <img src="/images/chains/starknet.svg" width="40" height="40" noZoom />
-    <img src="/images/chains/aleo.png" width="40" height="40" noZoom style={{borderRadius: "8px"}} />
-    <img src="/images/chains/cardano.svg" width="40" height="40" noZoom />
-  </div>
-  <p style={{textAlign: "center", margin: "0 0 8px", fontWeight: 500, color: "#ffffff"}}>Other Layer 1 Chains</p>
-  - ADA (Cardano)
-  - ALEO (Aleo)
-  - SOL (Solana) + SPL tokens
-  - SUI native and wrapped tokens
-  - XLM (Stellar) + issued assets
-  - TON + jettons
-  - TRX (Tron) + TRC-20 tokens
-  - XRP (Ripple)
-  - STRK (Starknet)
-</Card>
-</CardGroup>
-
-## Query supported tokens
-
-Use the 1Click API to get the current list of supported tokens for each chain:
+### Querying supported tokens
+Check supported tokens using the [1Click API](/integration/distribution-channels/1click-api/about-1click-api) `tokens` endpoint:
 
 ```bash
 curl https://1click.chaindefuser.com/v0/tokens
 ```
 
-This returns real-time data on available tokens, their addresses, decimals, and current support status.
+---
 
 ## Request new chains
 
@@ -467,10 +418,12 @@ This returns real-time data on available tokens, their addresses, decimals, and 
 </Accordion>
 </AccordionGroup>
 
+---
+
 ## Next steps
 
 <CardGroup cols={2}>
-<Card title="Start swapping" icon="rocket" href="/getting-started/first-swap">
+<Card title="Start swapping" icon="rocket" href="/getting-started/first-api-swap">
   Execute your first cross-chain swap in under 5 minutes.
 </Card>
 
