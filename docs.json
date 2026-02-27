@@ -14,10 +14,14 @@
         "tab": "Intents",
         "icon": "route",
         "groups": [
+          { "group": "Welcome",
+            "pages": [
+              "/index"
+            ]
+          },
           {
             "group": "Intents",
             "pages": [
-              "/index",
               "/getting-started/what-are-intents",
               "/resources/chain-support"
             ]
@@ -25,7 +29,7 @@
           {
             "group": "Getting started",
             "pages": [
-              "getting-started/first-swap"
+              "getting-started/first-api-swap"
             ]
           },
           {
@@ -194,11 +198,9 @@
   "footer": {
     "socials": {
       "x": "https://x.com/near_intents",
-      "github": "https://github.com/defuse-protocol"
+      "github": "https://github.com/defuse-protocol",
+      "telegram": "https://t.me/near_intents"
     }
-  },
-  "appearance": {
-    "default": "dark"
   },
   "redirects": [
     {
@@ -327,7 +329,7 @@
     },
     {
       "source": "/near-intents/examples",
-      "destination": "/getting-started/first-swap"
+      "destination": "/getting-started/first-api-swap"
     }
   ]
 }

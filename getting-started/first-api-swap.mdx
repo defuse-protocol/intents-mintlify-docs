@@ -1,26 +1,30 @@
 ---
-title: "Your First Swap"
-description: "Execute your first cross-chain swap using NEAR Intents"
+title: "Your First API Swap"
+description: "Execute your first intent-based swap using 1Click API"
 icon: "arrows-rotate"
 ---
 
-Execute a cross-chain token swap using the 1Click Swap API. You'll swap tokens from one blockchain to another without managing bridges or liquidity. NEAR Intents handles everything automatically.
+Let's execute your first cross-chain token swap using intents! For this, we will use the 1Click Swap API, a simple REST API that abstracts away all the complexities of cross-chain swaps. 
 
-<Info>
+<Callout color="#fb4d01">
 **Prerequisites**: 
 
 - A small amount of tokens on ANY [supported chain](/resources/chain-support).
 - A [JWT token](/integration/distribution-channels/1click-api/authentication) to avoid the 0.2% fee.
 
-**There is no testnet** - use small amounts for test swaps.
+</Callout>
 
-</Info>
+<Warning>
+There is no testnet version of NEAR Intents - use small amounts for test swaps.
+</Warning>
 
-## Perform your first swap
+---
+
+## Make your First API Swap
 
 <Steps>
 <Step title="Get supported tokens">
-Fetch available tokens to find the `assetId` values you'll need.
+Fetch available tokens to find the `assetId` values you will need.
 
 <CodeGroup>
 ```bash cURL
@@ -42,6 +46,44 @@ tokens = response.json()
 The response includes tokens with their `assetId` in this format:
 - NEAR tokens: `nep141:wrap.near`
 - Bridged tokens: `nep141:eth-0xdac17f958d2ee523a2206206994597c13d831ec7.omft.near`
+
+<Accordion title="Example response">
+
+```json
+[
+  {
+    "assetId": "nep141:wrap.near",
+    "decimals": 24,
+    "blockchain": "near",
+    "symbol": "wNEAR",
+    "price": 1.1,
+    "priceUpdatedAt": "2026-02-27T15:18:30.437Z",
+    "contractAddress": "wrap.near"
+  },
+  {
+    "assetId": "nep141:eth.omft.near",
+    "decimals": 18,
+    "blockchain": "eth",
+    "symbol": "ETH",
+    "price": 1947.28,
+    "priceUpdatedAt": "2026-02-27T15:25:30.527Z",
+    "contractAddress": null
+  },
+  {
+    "assetId": "nep141:btc.omft.near",
+    "decimals": 8,
+    "blockchain": "btc",
+    "symbol": "BTC",
+    "price": 66093,
+    "priceUpdatedAt": "2026-02-27T15:25:30.527Z",
+    "contractAddress": null
+  }
+]
+```
+
+</Accordion>
+
+
 </Step>
 
 <Step title="Request a quote">
@@ -122,25 +164,25 @@ result = quote.json()
 ```
 </CodeGroup>
 
-<Tip>
-Set `dry: true` to preview pricing without generating a deposit address. Set `dry: false` when ready to execute.
-</Tip>
+<Accordion title="Key parameters">
 
-**Key parameters:**
+| Parameter           | Description                                                                          |
+|---------------------|--------------------------------------------------------------------------------------|
+| `dry`               | `true` to validate parameters and **get a quote without executing the swap**         |
+| `swapType`          | `EXACT_INPUT` (specify input amount) or `EXACT_OUTPUT` (specify output amount)       |
+| `slippageTolerance` | Maximum acceptable slippage in basis points (100 = 1%)                               |
+| `originAsset`       | Source token `assetId` from the tokens endpoint                                      |
+| `depositType`       | `ORIGIN_CHAIN` (deposit on source chain) or `INTENTS` (already in Verifier contract) |
+| `destinationAsset`  | Target token `assetId` from the tokens endpoint                                      |
+| `amount`            | Amount in smallest unit (wei, yoctoNEAR, etc.)                                       |
+| `recipient`         | Address to receive swapped tokens                                                    |
+| `recipientType`     | `DESTINATION_CHAIN` (native address) or `INTENTS` (NEAR Intents account)             |
+| `refundTo`          | Address for refunds if swap fails                                                    |
+| `refundType`        | `ORIGIN_CHAIN` or `INTENTS`                                                          |
+| `deadline`          | Quote expiration timestamp in ISO format                                             |
 
-| Parameter | Description |
-|-----------|-------------|
-| `swapType` | `EXACT_INPUT` (specify input amount) or `EXACT_OUTPUT` (specify output amount) |
-| `slippageTolerance` | Maximum acceptable slippage in basis points (100 = 1%) |
-| `originAsset` | Source token `assetId` from the tokens endpoint |
-| `depositType` | `ORIGIN_CHAIN` (deposit on source chain) or `INTENTS` (already in Verifier contract) |
-| `destinationAsset` | Target token `assetId` from the tokens endpoint |
-| `amount` | Amount in smallest unit (wei, yoctoNEAR, etc.) |
-| `recipient` | Address to receive swapped tokens |
-| `recipientType` | `DESTINATION_CHAIN` (native address) or `INTENTS` (NEAR Intents account) |
-| `refundTo` | Address for refunds if swap fails |
-| `refundType` | `ORIGIN_CHAIN` or `INTENTS` |
-| `deadline` | Quote expiration timestamp in ISO format |
+</Accordion>
+
 </Step>
 
 <Step title="Send tokens">
@@ -208,21 +250,27 @@ status = requests.get(
 ```
 </CodeGroup>
 
-**Swap statuses:**
+<Accordion title="Status response">
 
-| Status | Description |
-|--------|-------------|
-| `PENDING_DEPOSIT` | Awaiting your token deposit |
-| `KNOWN_DEPOSIT_TX` | Deposit transaction detected |
-| `PROCESSING` | Swap being executed |
-| `SUCCESS` | Tokens delivered to destination address |
-| `INCOMPLETE_DEPOSIT` | Deposit below required amount |
-| `REFUNDED` | Swap failed, funds returned to refund address |
-| `FAILED` | Swap encountered an error |
+| Status               | Description                                   |
+|----------------------|-----------------------------------------------|
+| `PENDING_DEPOSIT`    | Awaiting your token deposit                   |
+| `KNOWN_DEPOSIT_TX`   | Deposit transaction detected                  |
+| `PROCESSING`         | Swap being executed                           |
+| `SUCCESS`            | Tokens delivered to destination address       |
+| `INCOMPLETE_DEPOSIT` | Deposit below required amount                 |
+| `REFUNDED`           | Swap failed, funds returned to refund address |
+| `FAILED`             | Swap encountered an error                     |
 
-<Tip>
+</Accordion>
+
+<Callout color="#fb4d01">
 View detailed transaction info on the [NEAR Intents Explorer](https://explorer.near-intents.org) by searching for your deposit address.
-</Tip>
+</Callout>
+</Step>
+
+<Step title="Celebrate! 🎉">
+You just completed your first intent-based cross-chain swap!
 </Step>
 </Steps>
 
