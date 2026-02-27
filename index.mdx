@@ -1,16 +1,111 @@
 ---
-title: "NEAR Intents"
-sidebarTitle: "Welcome"
-icon: 'home'
-description: "A multi-chain transaction protocol where users specify desired outcomes and market makers compete for best execution."
+hidden: true
+mode: "wide"
+
 ---
 
-import IntegrationCards from "/snippets/integration-cards.mdx";
+<h1 class="text-center mt-0 mb-1"> NEAR Intents Documentation </h1>
+<div class="mb-8 text-lg text-center prose prose-gray dark:prose-invert"><p>The protocol fueling cross-chain swaps across 35+ chains</p></div>
 
-<Card title="What are Intents?" icon="lightbulb" href="/getting-started/what-are-intents">
-  Learn how the protocol works, key benefits, and core concepts.
-</Card>
+<div class="landing pt-8 max-w-6xl mx-auto">
+  <Columns cols={2}>
+    <div>
+      <h2 class="mb-2"> 1-Click API </h2>
+      <p class="text-sm"><Badge color="green">REST API</Badge>&nbsp;&nbsp;<Badge color="orange">Backend</Badge>&nbsp;&nbsp;<Badge color="blue">Frontend</Badge></p>
+      <p>Request quotes, execute cross-chain swaps, and track their status. No blockchain expertise required. </p>
+      <p><a href="/getting-started/first-api-swap"> Quickstart -> </a></p>
+      <p><a href="/integration/distribution-channels/1click-api/about-1click-api"> Learn More -> </a></p>
+    </div>
+    <CodeGroup>
+      ```bash cURL
+      # Query supported tokens
+      curl https://1click.chaindefuser.com/v0/tokens
 
-## Choose your integration path
+      # Request a quote
+      curl -X POST https://1click.chaindefuser.com/v0/quote \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+        -d '{
+          "swapType": "EXACT_INPUT",
+          "originAsset": "nep141:wrap.near",
+          "depositType": "ORIGIN_CHAIN",
+          "destinationAsset": "nep141:arb-0x912ce59144191c1204e64559fe8253a0e49e6548.omft.near",
+          "amount": "100000000000000000000000",
+          ...
+        }'
+      ```
 
-<IntegrationCards />
+      ```typescript TypeScript
+      // Query supported tokens
+      const tokensResponse = await fetch('https://1click.chaindefuser.com/v0/tokens');
+      const tokens = await tokensResponse.json();
+
+      // Request a quote
+      const quote = await fetch('https://1click.chaindefuser.com/v0/quote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer YOUR_JWT_TOKEN'
+        },
+        body: JSON.stringify({
+          swapType: 'EXACT_INPUT',
+          originAsset: 'nep141:wrap.near',
+          depositType: 'ORIGIN_CHAIN',
+          destinationAsset: 'nep141:arb-0x912ce59144191c1204e64559fe8253a0e49e6548.omft.near',
+          amount: '100000000000000000000000',
+          // ...
+        })
+      });
+      const result = await quote.json();
+      ```
+
+      ```python Python
+      import requests
+
+      # Query supported tokens
+      tokens_response = requests.get('https://1click.chaindefuser.com/v0/tokens')
+      tokens = tokens_response.json()
+
+      # Request a quote
+      quote = requests.post(
+        'https://1click.chaindefuser.com/v0/quote',
+        headers={
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer YOUR_JWT_TOKEN'
+        },
+        json={
+          'swapType': 'EXACT_INPUT',
+          'originAsset': 'nep141:wrap.near',
+          'depositType': 'ORIGIN_CHAIN',
+          'destinationAsset': 'nep141:arb-0x912ce59144191c1204e64559fe8253a0e49e6548.omft.near',
+          'amount': '100000000000000000000000',
+          # ...
+        }
+      )
+      result = quote.json()
+      ```
+    </CodeGroup>
+  </Columns>
+
+  <h2 class="ps-0"> Browse By Topic </h2>
+  <div class="mb-8 text-lg prose prose-gray dark:prose-invert"><p>Find the right integration path for your use case.</p></div>
+
+  <Columns cols={4}>
+    <Card title="What are intents?" icon="lightbulb" href="/getting-started/what-are-intents" cta="Read docs" arrow>
+      Learn how the protocol works, key benefits, and core concepts.
+    </Card>
+
+    <Card title="Token Swaps" icon="vault" href="/getting-started/first-api-swap" cta="Integrate" arrow>
+      Integrate cross-chain token swaps into your app, wallet, or exchange.
+    </Card>
+
+    <Card title="Market Makers" icon="users" href="/integration/market-makers/introduction" cta="Learn how" arrow>
+      Provide liquidity and earn fees by competing fulfilling cross-chain swap intents.
+    </Card>
+
+    <Card title="Verifier Contract" icon="credit-card" href="/integration/verifier-contract/introduction" cta="Read docs" arrow>
+      Interact with the low-level Verifier smart contract for custom integrations.
+    </Card>
+  </Columns>
+
+</div>

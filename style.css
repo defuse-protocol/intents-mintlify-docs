@@ -1,0 +1,23 @@
+.landing code {
+    max-height: 250px;
+    overflow: auto;
+}
+
+.primary {
+    color: rgb(var(--primary));
+}
+
+[data-theme="dark"] .primary,
+.dark .primary {
+    color: rgb(var(--primary-light));
+}
+
+.intent-diagram-desktop-only {
+    display: flex;
+}
+
+@media (max-width: 640px) {
+    .intent-diagram-desktop-only {
+        display: none;
+    }
+}
