@@ -316,7 +316,7 @@
     },
     {
       "source": "/near-intents/examples",
-      "destination": "/getting-started/first-api-swap"
+      "destination": "/integration/distribution-channels/1click-api/quickstart"
     }
   ]
 }
