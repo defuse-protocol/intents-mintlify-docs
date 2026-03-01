@@ -1,11 +1,11 @@
 ---
 title: "What are Intents?"
 sidebarTitle: "What are Intents?"
-description: "Let users specify what they want, not how to get it."
+description: "Define desired outcomes instead of managing execution steps"
 icon: 'lightbulb'
 ---
 
-An intent expresses **what you want** to achieve, **not how to get it**. This way, if you want to integrate cross-chain swaps, instead of creating code to bridge assets, find quotes, and execute swaps, you simply build an intent stating: <span class="primary">_"I have 1 ETH on Ethereum, I want USDC on Arbitrum"_</span>.
+An intent expresses **what you want** to achieve, **not how to get it**. Instead of writing code to bridge assets, find quotes, and execute swaps, you submit an intent such as _"I have 1 ETH on Ethereum, I want USDC on Arbitrum"_.
 
 <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden" }}>
   <iframe
@@ -51,24 +51,24 @@ An intent expresses **what you want** to achieve, **not how to get it**. This wa
 ## Key benefits
 
 <CardGroup cols={2}>
-  <Card title="Seamless Experience" icon="sparkles" horizontal>
-    A simple request replaces dozens of complex steps 
+  <Card title="Simple Integration" icon="sparkles" horizontal>
+    Express desired outcomes instead of managing individual steps
   </Card>
 
-  <Card title="Settles in Seconds" icon="bolt" horizontal>
-    Solvers compete to fulfill your intent as quickly as possible
+  <Card title="Fast Settlement" icon="bolt" horizontal>
+    Solvers compete to fill orders quickly
   </Card>
 
   <Card title="Use Your Wallets" icon="wallet" horizontal>
     Use your existing wallets on any supported chain
   </Card>
 
-  <Card title="Competitive pricing" icon="chart-line" horizontal>
-    Competition ensures optimal rates and low slippage
+  <Card title="Competitive Pricing" icon="chart-line" horizontal>
+    Multiple solvers compete on price and execution quality
   </Card>
 
-  <Card title="Automatic refunds" icon="shield-check" horizontal>
-    Get automatically refunded if the deal can't be executed
+  <Card title="Automatic Refunds" icon="shield-check" horizontal>
+    Funds are returned if the intent cannot be executed
   </Card>
 
   <Card title="Non-Custodial Security" icon="lock-keyhole" horizontal>
@@ -82,7 +82,7 @@ An intent expresses **what you want** to achieve, **not how to get it**. This wa
 
 <AccordionGroup>
 <Accordion title="How does NEAR Intents ensure security?">
-  NEAR Intents uses atomic execution enforced by smart contracts on NEAR Protocol. Transactions either complete fully with all conditions met, or they're automatically reverted and your funds returned to your refund address. All transactions are verified on-chain before settlement.
+  NEAR Intents uses atomic execution enforced by smart contracts on NEAR Protocol. Transactions either complete with all conditions met, or they are reverted and funds returned to the refund address. All transactions are verified on-chain before settlement.
 </Accordion>
 
 <Accordion title="What chains and tokens are supported?">
@@ -94,7 +94,7 @@ An intent expresses **what you want** to achieve, **not how to get it**. This wa
 </Accordion>
 
 <Accordion title="How do market makers compete?">
-  When you create an intent, it's broadcast to multiple market makers who bid to fulfill it. They compete on price, speed, and execution quality. The protocol automatically selects the best execution path while ensuring your terms are met.
+  When you create an intent, it is broadcast to multiple market makers who bid to fulfill it. They compete on price, speed, and execution quality. The best execution path is selected while ensuring the intent's terms are met.
 </Accordion>
 </AccordionGroup>
 

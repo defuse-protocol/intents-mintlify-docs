@@ -5,14 +5,14 @@ description: 'Integrate cross-chain token swaps into your application'
 icon: 'book-open'
 ---
 
-Token swaps on NEAR Intents are delivered through **distribution channels** — the user-facing applications, wallets, and exchanges that make cross-chain swaps accessible to end users. Distribution channels handle intent creation, management, and asset delivery, while [Market Makers](/integration/market-makers/introduction) handle fulfillment and pricing.
+Token swaps on NEAR Intents are delivered through **distribution channels** — user-facing applications, wallets, and exchanges that integrate cross-chain swaps. Distribution channels handle intent creation, management, and asset delivery, while [Market Makers](/integration/market-makers/introduction) handle fulfillment and pricing.
 
 <img className="block dark:hidden" src="/images/diagrams/distribution-channels-intro-light.png" alt="NEAR Intents Token Swaps" />
 <img className="hidden dark:block" src="/images/diagrams/distribution-channels-intro-dark.png" alt="NEAR Intents Token Swaps" />
 
 ## 1Click Swap API
 
-The **1Click Swap API** is the easiest way to build a distribution channel. It's a REST API that handles intent creation, market maker coordination, and transaction execution — so you can focus on your user experience instead of protocol complexity.
+The **1Click Swap API** is a REST API that handles intent creation, market maker coordination, and transaction execution. It is the recommended way to build a distribution channel.
 
 <Card title="1Click Swap API" icon="bolt" href="/integration/distribution-channels/1click-api/about-1click-api">
   Get started with the recommended integration path
@@ -20,7 +20,7 @@ The **1Click Swap API** is the easiest way to build a distribution channel. It's
 
 ## Explorer API
 
-The **Explorer API** lets you query transaction history and status for your integration. Use it to track swaps, build dashboards, or provide transaction receipts to your users.
+The **Explorer API** provides endpoints for querying transaction history and status. Use it to track swaps, build dashboards, or surface transaction receipts in your application.
 
 <Card title="Explorer API" icon="magnifying-glass" href="/api-reference/explorer/introduction">
   Query transaction history and swap status
