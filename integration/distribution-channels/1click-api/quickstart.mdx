@@ -1,29 +1,25 @@
 ---
-title: "Your First API Swap"
+title: "Quickstart"
 description: "Execute your first intent-based swap using 1Click API"
-icon: "arrows-rotate"
+icon: "rocket"
 ---
 
-Let's execute your first cross-chain token swap using intents! For this, we will use the 1Click Swap API, a simple REST API that abstracts away all the complexities of cross-chain swaps. 
-
-<Callout color="#fb4d01">
-**Prerequisites**: 
-
-- A small amount of tokens on ANY [supported chain](/resources/chain-support).
-- A [JWT token](/integration/distribution-channels/1click-api/authentication) to avoid the 0.2% fee.
-
-</Callout>
+1Click API enables you to specify a cross-chain swap **intent** (**what** you want to swap), and handles the **execution** for you.
 
 <Warning>
 There is no testnet version of NEAR Intents - use small amounts for test swaps.
 </Warning>
 
----
-
-## Make your First API Swap
-
 <Steps>
-<Step title="Get supported tokens">
+
+<Step title="Prerequisites">
+
+- A small amount of tokens on ANY [supported chain](/resources/chain-support).
+- A [JWT token](/integration/distribution-channels/1click-api/authentication) to avoid the 0.2% fee.
+
+</Step>
+
+<Step title="Query supported tokens">
 Fetch available tokens to find the `assetId` values you will need.
 
 <CodeGroup>
@@ -82,7 +78,6 @@ The response includes tokens with their `assetId` in this format:
 ```
 
 </Accordion>
-
 
 </Step>
 
