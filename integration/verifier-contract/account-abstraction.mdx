@@ -4,7 +4,7 @@ description: 'How the Verifier contract identifies users and manages account key
 icon: 'user-gear'
 ---
 
-Users don't need to create a NEAR account to use NEAR Intents. The Verifier contract supports wallets across [all supported chains](/resources/chain-support). When a user signs with their existing wallet, the Verifier automatically creates an account that only they can control using their existing private keys. No new wallet, no seed phrase — just sign and trade.
+Users do not need to create a NEAR account to use NEAR Intents. The Verifier contract supports wallets across [all supported chains](/resources/chain-support). When a user signs with their existing wallet, the Verifier derives an account from their public key. The user retains sole control via their existing private keys.
 
 Under the hood, the Verifier identifies users via a NEAR `AccountId`, which can be either a Named account (like `alice.near`) or an Implicit account derived from a public key. The Verifier maintains its own mapping of account IDs to public keys, allowing it to verify signed intents from any supported wallet.
 
